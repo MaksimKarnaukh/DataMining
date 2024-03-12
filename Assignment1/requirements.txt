@@ -4,3 +4,4 @@ pandas
 openpyxl
 matplotlib
 seaborn
+apyori
