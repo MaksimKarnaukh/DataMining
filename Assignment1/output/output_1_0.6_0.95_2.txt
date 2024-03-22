@@ -1,0 +1,4 @@
+Number of results: 15
+Number of real results: 13
+Number of total rules: 0
+
