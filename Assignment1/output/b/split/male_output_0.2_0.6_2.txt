@@ -1,0 +1,535 @@
+Number of results: 341
+Items: (Male, No)
+	No => Male (support: 1.0, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male)
+	0 => Male (support: 0.951, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No)
+	0, No => Male (support: 0.951, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male)
+	private => Male (support: 0.734, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, No)
+	private, No => Male (support: 0.734, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, private)
+	0, private => Male (support: 0.6955, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, private)
+	0, No, private => Male (support: 0.6955, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Intermediate)
+	Intermediate => Male (support: 0.68216, confidence: 1.0, lift: 1.0)
+
+Items: (Male, No, Intermediate)
+	No, Intermediate => Male (support: 0.68216, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Intermediate)
+	0, Intermediate => Male (support: 0.65983, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, Intermediate)
+	0, No, Intermediate => Male (support: 0.65983, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband)
+	Husband => Male (support: 0.598, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, No)
+	Husband, No => Male (support: 0.598, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low)
+	low => Male (support: 0.589, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, No)
+	low, No => Male (support: 0.589, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband)
+	0, Husband => Male (support: 0.5705, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, No)
+	0, Husband, No => Male (support: 0.5705, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low)
+	0, low => Male (support: 0.55433, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, No)
+	0, low, No => Male (support: 0.55433, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Intermediate)
+	private, Intermediate => Male (support: 0.52616, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, No, Intermediate)
+	private, No, Intermediate => Male (support: 0.52616, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Full-time)
+	Full-time => Male (support: 0.52116, confidence: 1.0, lift: 1.0)
+
+Items: (Male, No, Full-time)
+	No, Full-time => Male (support: 0.52116, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Intermediate, private)
+	0, Intermediate, private => Male (support: 0.50816, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, No, private)
+	0, No, Intermediate, private => Male (support: 0.50816, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Full-time)
+	0, Full-time => Male (support: 0.495, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, Full-time)
+	0, No, Full-time => Male (support: 0.495, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, Intermediate)
+	low, Intermediate => Male (support: 0.46616, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, No, Intermediate)
+	low, No, Intermediate => Male (support: 0.46616, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, low)
+	private, low => Male (support: 0.44933, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, low, No)
+	private, low, No => Male (support: 0.44933, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, Intermediate)
+	0, low, Intermediate => Male (support: 0.44766, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, low, No)
+	0, low, No, Intermediate => Male (support: 0.44766, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, private)
+	0, low, private => Male (support: 0.42133, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, No, private)
+	0, low, No, private => Male (support: 0.42133, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male)
+	high => Male (support: 0.411, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, No)
+	high, No => Male (support: 0.411, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Husband)
+	private, Husband => Male (support: 0.40983, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Husband, No)
+	private, Husband, No => Male (support: 0.40983, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, high)
+	0, high => Male (support: 0.39666, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, high)
+	0, No, high => Male (support: 0.39666, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Full-time)
+	private, Full-time => Male (support: 0.3885, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, No, Full-time)
+	private, No, Full-time => Male (support: 0.3885, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, private)
+	0, Husband, private => Male (support: 0.388, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, private)
+	0, Husband, No, private => Male (support: 0.388, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, Intermediate)
+	Husband, Intermediate => Male (support: 0.37166, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, No, Intermediate)
+	Husband, No, Intermediate => Male (support: 0.37166, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Full-time, private)
+	0, Full-time, private => Male (support: 0.3665, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, private, Full-time)
+	0, No, Full-time, private => Male (support: 0.3665, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, low, Intermediate)
+	private, low, Intermediate => Male (support: 0.36483, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, Male, low, No, private)
+	private, low, No, Intermediate => Male (support: 0.36483, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, Intermediate)
+	0, Husband, Intermediate => Male (support: 0.36166, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Intermediate, 0, Male, No)
+	0, Husband, No, Intermediate => Male (support: 0.36166, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Intermediate, Full-time)
+	Intermediate, Full-time => Male (support: 0.35933, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Intermediate, No, Full-time)
+	Intermediate, No, Full-time => Male (support: 0.35933, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, low, private)
+	0, low, Intermediate, private => Male (support: 0.34916, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, low, No, private)
+	Intermediate, 0, low, No, private => Male (support: 0.34916, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Intermediate, Full-time)
+	0, Intermediate, Full-time => Male (support: 0.34816, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, No, Full-time)
+	0, Intermediate, No, Full-time => Male (support: 0.34816, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Overtime)
+	Overtime => Male (support: 0.33016, confidence: 1.0, lift: 1.0)
+
+Items: (Male, No, Overtime)
+	No, Overtime => Male (support: 0.33016, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, Husband)
+	high, Husband => Male (support: 0.3275, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, Husband, No)
+	high, Husband, No => Male (support: 0.3275, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, Full-time)
+	low, Full-time => Male (support: 0.31866, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, No, Full-time)
+	low, No, Full-time => Male (support: 0.31866, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, high)
+	0, Husband, high => Male (support: 0.3165, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, high)
+	0, Husband, No, high => Male (support: 0.3165, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male)
+	(49-65] => Male (support: 0.31583, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, No)
+	(49-65], No => Male (support: 0.31583, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Overtime)
+	0, Overtime => Male (support: 0.31533, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, Overtime)
+	0, No, Overtime => Male (support: 0.31533, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, Full-time)
+	Husband, Full-time => Male (support: 0.31266, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, No, Full-time)
+	Husband, No, Full-time => Male (support: 0.31266, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, 0)
+	(49-65], 0 => Male (support: 0.306, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, No, 0)
+	(49-65], No, 0 => Male (support: 0.306, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, Full-time)
+	0, low, Full-time => Male (support: 0.2985, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, No, Full-time)
+	0, low, No, Full-time => Male (support: 0.2985, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, Full-time)
+	0, Husband, Full-time => Male (support: 0.29766, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, Full-time)
+	0, Husband, No, Full-time => Male (support: 0.29766, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, private)
+	high, private => Male (support: 0.28466, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, No, private)
+	high, No, private => Male (support: 0.28466, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Intermediate, Full-time)
+	private, Intermediate, Full-time => Male (support: 0.27916, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, Male, No, private, Full-time)
+	private, Intermediate, No, Full-time => Male (support: 0.27916, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Advanced)
+	Advanced => Male (support: 0.27783, confidence: 1.0, lift: 1.0)
+
+Items: (Male, No, Advanced)
+	No, Advanced => Male (support: 0.27783, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, private, high)
+	0, private, high => Male (support: 0.27416, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, private, high)
+	0, No, private, high => Male (support: 0.27416, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, low)
+	Husband, low => Male (support: 0.2705, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, No, low)
+	Husband, No, low => Male (support: 0.2705, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, private, Full-time)
+	0, Intermediate, Full-time, private => Male (support: 0.26983, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, No, private, Full-time)
+	Intermediate, 0, No, private, Full-time => Male (support: 0.26983, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Husband, Intermediate)
+	private, Husband, Intermediate => Male (support: 0.269, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Intermediate, Male, No, private)
+	private, Husband, No, Intermediate => Male (support: 0.269, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Never married)
+	Never married => Male (support: 0.26766, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Never married, No)
+	Never married, No => Male (support: 0.26766, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Intermediate, 0, Male, private)
+	0, Husband, Intermediate, private => Male (support: 0.26116, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Intermediate, 0, Male, No, private)
+	Husband, Intermediate, 0, No, private => Male (support: 0.26116, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Advanced)
+	0, Advanced => Male (support: 0.2605, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, Advanced)
+	0, No, Advanced => Male (support: 0.2605, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, low)
+	0, Husband, low => Male (support: 0.254, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, low)
+	0, Husband, No, low => Male (support: 0.254, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Intermediate, low, Full-time)
+	Intermediate, low, Full-time => Male (support: 0.25283, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, Male, low, No, Full-time)
+	low, Intermediate, No, Full-time => Male (support: 0.25283, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Never married)
+	0, Never married => Male (support: 0.25116, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Never married, No)
+	0, Never married, No => Male (support: 0.25116, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, low, Full-time)
+	private, low, Full-time => Male (support: 0.24983, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, No, private, Full-time)
+	private, low, No, Full-time => Male (support: 0.24983, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Overtime)
+	private, Overtime => Male (support: 0.243, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, No, Overtime)
+	private, No, Overtime => Male (support: 0.243, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, low, Full-time)
+	0, Intermediate, low, Full-time => Male (support: 0.24266, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, No, low, Full-time)
+	Intermediate, 0, low, No, Full-time => Male (support: 0.24266, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, Never married)
+	low, Never married => Male (support: 0.23566, confidence: 1.0, lift: 1.0)
+
+Items: (Male, low, Never married, No)
+	low, Never married, No => Male (support: 0.23566, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, Husband)
+	(49-65], Husband => Male (support: 0.2355, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, Husband, No)
+	(49-65], Husband, No => Male (support: 0.2355, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, Overtime)
+	Husband, Overtime => Male (support: 0.233, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, No, Overtime)
+	Husband, No, Overtime => Male (support: 0.233, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, private, Full-time)
+	0, low, Full-time, private => Male (support: 0.23266, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, No, private, Full-time)
+	0, low, No, private, Full-time => Male (support: 0.23266, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, private, Overtime)
+	0, private, Overtime => Male (support: 0.23233, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, No, private, Overtime)
+	0, No, private, Overtime => Male (support: 0.23233, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, Husband, 0)
+	(49-65], Husband, 0 => Male (support: 0.22816, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Husband, 0, Male, No)
+	(49-65], Husband, No, 0 => Male (support: 0.22816, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Never married)
+	private, Never married => Male (support: 0.227, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Never married, No)
+	private, Never married, No => Male (support: 0.227, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Husband, Overtime)
+	0, Husband, Overtime => Male (support: 0.2235, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, Overtime)
+	0, Husband, No, Overtime => Male (support: 0.2235, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, Husband, private)
+	high, Husband, private => Male (support: 0.22216, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Male, No, high, private)
+	high, Husband, No, private => Male (support: 0.22216, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, low, Never married)
+	0, low, Never married => Male (support: 0.22066, confidence: 1.0, lift: 1.0)
+
+Items: (Never married, 0, Male, low, No)
+	0, low, Never married, No => Male (support: 0.22066, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, Intermediate)
+	high, Intermediate => Male (support: 0.216, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, No, Intermediate)
+	high, No, Intermediate => Male (support: 0.216, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, Husband, Full-time)
+	private, Husband, Full-time => Male (support: 0.21533, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Male, No, private, Full-time)
+	private, Husband, No, Full-time => Male (support: 0.21533, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, private)
+	(49-65], private => Male (support: 0.215, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, No, private)
+	(49-65], No, private => Male (support: 0.215, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Never married, private)
+	0, Never married, private => Male (support: 0.21366, confidence: 1.0, lift: 1.0)
+
+Items: (Never married, 0, Male, No, private)
+	0, Never married, No, private => Male (support: 0.21366, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Intermediate, Overtime)
+	Intermediate, Overtime => Male (support: 0.2135, confidence: 1.0, lift: 1.0)
+
+Items: (Male, No, Intermediate, Overtime)
+	No, Intermediate, Overtime => Male (support: 0.2135, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, private, high)
+	0, Husband, private, high => Male (support: 0.21333, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, high, private)
+	Husband, 0, No, private, high => Male (support: 0.21333, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Intermediate, high)
+	0, Intermediate, high => Male (support: 0.21216, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, No, high)
+	0, No, Intermediate, high => Male (support: 0.21216, confidence: 1.0, lift: 1.0)
+
+Items: (Male, (38-49])
+	(38-49] => Male (support: 0.21183, confidence: 1.0, lift: 1.0)
+
+Items: (Male, (38-49], No)
+	(38-49], No => Male (support: 0.21183, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Never married, Intermediate)
+	Never married, Intermediate => Male (support: 0.2115, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Never married, Intermediate, No)
+	Never married, Intermediate, No => Male (support: 0.2115, confidence: 1.0, lift: 1.0)
+
+Items: (Male, (17-28])
+	(17-28] => Male (support: 0.208, confidence: 1.0, lift: 1.0)
+
+Items: (Male, (17-28], No)
+	(17-28], No => Male (support: 0.208, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, 0, private)
+	(49-65], 0, private => Male (support: 0.208, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], 0, Male, No, private)
+	(49-65], No, 0, private => Male (support: 0.208, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, Intermediate)
+	(49-65], Intermediate => Male (support: 0.206, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, No, Intermediate)
+	(49-65], No, Intermediate => Male (support: 0.206, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Intermediate, Overtime)
+	0, Intermediate, Overtime => Male (support: 0.20583, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, 0, Male, No, Overtime)
+	0, No, Intermediate, Overtime => Male (support: 0.20583, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, Advanced)
+	Husband, Advanced => Male (support: 0.20516, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, No, Advanced)
+	Husband, No, Advanced => Male (support: 0.20516, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, low, Intermediate)
+	Husband, low, Intermediate => Male (support: 0.20316, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Intermediate, Male, low, No)
+	low, Husband, No, Intermediate => Male (support: 0.20316, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, private, Full-time)
+	0, Husband, Full-time, private => Male (support: 0.20266, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, 0, Male, No, private, Full-time)
+	Husband, 0, No, private, Full-time => Male (support: 0.20266, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, Full-time)
+	high, Full-time => Male (support: 0.2025, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Male, Intermediate, 0)
+	(49-65], Intermediate, 0 => Male (support: 0.2025, confidence: 1.0, lift: 1.0)
+
+Items: (high, Male, No, Full-time)
+	high, No, Full-time => Male (support: 0.2025, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Intermediate, 0, Male, No)
+	(49-65], Intermediate, No, 0 => Male (support: 0.2025, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, (38-49])
+	0, (38-49] => Male (support: 0.202, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, (38-49], No)
+	0, (38-49], No => Male (support: 0.202, confidence: 1.0, lift: 1.0)
+
+Items: (0, Male, Never married, Intermediate)
+	0, Never married, Intermediate => Male (support: 0.202, confidence: 1.0, lift: 1.0)
+
+Items: (Never married, Intermediate, 0, Male, No)
+	0, Never married, Intermediate, No => Male (support: 0.202, confidence: 1.0, lift: 1.0)
+
+Items: (private, Male, low, Never married)
+	private, low, Never married => Male (support: 0.20183, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, Male, low, private, Full-time)
+	private, Intermediate, low, Full-time => Male (support: 0.20183, confidence: 1.0, lift: 1.0)
+
+Items: (Never married, Male, low, No, private)
+	private, low, Never married, No => Male (support: 0.20183, confidence: 1.0, lift: 1.0)
+
+Items: (Intermediate, Male, low, No, private, Full-time)
+	Intermediate, low, No, private, Full-time => Male (support: 0.20183, confidence: 1.0, lift: 1.0)
+
+Items: (Male, Husband, Full-time, Intermediate)
+	Husband, Full-time, Intermediate => Male (support: 0.201, confidence: 1.0, lift: 1.0)
+
+Items: (Husband, Intermediate, Male, No, Full-time)
+	Husband, No, Full-time, Intermediate => Male (support: 0.201, confidence: 1.0, lift: 1.0)
+
+Number of real results: 336
+Number of total rules: 177
+

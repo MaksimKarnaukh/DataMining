@@ -1,0 +1,475 @@
+Number of results: 305
+Items: (0, Female)
+	0 => Female (support: 0.96366, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No)
+	No => Female (support: 0.95733, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No)
+	0, No => Female (support: 0.92266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low)
+	low => Female (support: 0.79566, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low)
+	0, low => Female (support: 0.76766, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No)
+	low, No => Female (support: 0.76033, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female)
+	private => Female (support: 0.74666, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, No)
+	0, low, No => Female (support: 0.73366, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, private)
+	0, private => Female (support: 0.72, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, No)
+	private, No => Female (support: 0.71433, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No, private)
+	0, No, private => Female (support: 0.689, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate)
+	Intermediate => Female (support: 0.66366, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Intermediate)
+	0, Intermediate => Female (support: 0.64266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No, Intermediate)
+	No, Intermediate => Female (support: 0.63633, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No, Intermediate)
+	0, No, Intermediate => Female (support: 0.61633, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, low)
+	private, low => Female (support: 0.613, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, private)
+	0, low, private => Female (support: 0.59266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, Intermediate)
+	low, Intermediate => Female (support: 0.588, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, low, No)
+	private, low, No => Female (support: 0.58566, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Full-time)
+	Full-time => Female (support: 0.574, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, Intermediate)
+	0, low, Intermediate => Female (support: 0.569, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, No, private)
+	0, low, No, private => Female (support: 0.56633, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, Intermediate)
+	low, No, Intermediate => Female (support: 0.56233, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Full-time)
+	0, Full-time => Female (support: 0.55466, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No, Full-time)
+	No, Full-time => Female (support: 0.54866, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, No)
+	0, low, No, Intermediate => Female (support: 0.54433, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Intermediate)
+	private, Intermediate => Female (support: 0.542, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No, Full-time)
+	0, No, Full-time => Female (support: 0.53066, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Intermediate, private)
+	0, Intermediate, private => Female (support: 0.52566, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife)
+	Wife => Female (support: 0.52366, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, No, Intermediate)
+	private, No, Intermediate => Female (support: 0.51833, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Wife)
+	0, Wife => Female (support: 0.50633, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, private)
+	0, No, Intermediate, private => Female (support: 0.503, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No, Wife)
+	Wife, No => Female (support: 0.49266, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, low, Intermediate)
+	private, low, Intermediate => Female (support: 0.484, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No, Wife)
+	0, Wife, No => Female (support: 0.47666, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, private)
+	0, low, Intermediate, private => Female (support: 0.46933, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, No, private)
+	private, low, No, Intermediate => Female (support: 0.46166, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, No, private)
+	Intermediate, 0, low, No, private => Female (support: 0.448, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, Full-time)
+	low, Full-time => Female (support: 0.44433, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Full-time)
+	private, Full-time => Female (support: 0.42966, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, Full-time)
+	0, low, Full-time => Female (support: 0.429, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, Full-time)
+	low, No, Full-time => Female (support: 0.425, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Full-time, private)
+	0, Full-time, private => Female (support: 0.41566, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, No, Full-time)
+	0, low, No, Full-time => Female (support: 0.41066, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, No, Full-time)
+	private, No, Full-time => Female (support: 0.40933, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, No, private, Full-time)
+	0, No, Full-time, private => Female (support: 0.39633, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, Wife)
+	Wife, low => Female (support: 0.396, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, Wife)
+	0, Wife, low => Female (support: 0.38266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, Full-time)
+	Intermediate, Full-time => Female (support: 0.377, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, Wife)
+	Wife, low, No => Female (support: 0.37133, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Wife)
+	private, Wife => Female (support: 0.36966, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Intermediate, Full-time)
+	0, Intermediate, Full-time => Female (support: 0.36533, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, No, Full-time)
+	Intermediate, No, Full-time => Female (support: 0.362, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, No, Wife)
+	0, Wife, low, No => Female (support: 0.359, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Wife, private)
+	0, Wife, private => Female (support: 0.35766, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, Full-time)
+	0, Intermediate, No, Full-time => Female (support: 0.351, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, No, Wife)
+	private, Wife, No => Female (support: 0.348, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, low, Full-time)
+	private, low, Full-time => Female (support: 0.344, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, No, private, Wife)
+	0, Wife, No, private => Female (support: 0.337, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, private, Full-time)
+	0, low, Full-time, private => Female (support: 0.333, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, private, Full-time)
+	private, low, No, Full-time => Female (support: 0.328, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, Full-time)
+	Intermediate, low, Full-time => Female (support: 0.32733, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, No, private, Full-time)
+	0, low, No, private, Full-time => Female (support: 0.31766, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Advanced)
+	Advanced => Female (support: 0.31733, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, Full-time)
+	0, Intermediate, low, Full-time => Female (support: 0.317, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, Full-time)
+	Wife, Full-time => Female (support: 0.31533, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, No, Full-time)
+	low, Intermediate, No, Full-time => Female (support: 0.31366, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Intermediate, Full-time)
+	private, Intermediate, Full-time => Female (support: 0.31166, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, Intermediate)
+	Wife, Intermediate => Female (support: 0.31, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Wife, Full-time)
+	0, Wife, Full-time => Female (support: 0.307, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Advanced)
+	0, Advanced => Female (support: 0.30433, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, low, Full-time)
+	Intermediate, 0, low, No, Full-time => Female (support: 0.304, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female)
+	(49-65] => Female (support: 0.303, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, No)
+	(49-65], No => Female (support: 0.30266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, private, Full-time)
+	0, Intermediate, Full-time, private => Female (support: 0.30233, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No, Advanced)
+	No, Advanced => Female (support: 0.302, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Wife, Intermediate)
+	0, Wife, Intermediate => Female (support: 0.30166, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, No, private, Full-time)
+	private, Intermediate, No, Full-time => Female (support: 0.298, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, 0)
+	(49-65], 0 => Female (support: 0.29733, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, No, 0)
+	(49-65], No, 0 => Female (support: 0.297, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, No, Full-time)
+	Wife, No, Full-time => Female (support: 0.296, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, No, Intermediate)
+	Wife, No, Intermediate => Female (support: 0.29366, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No, Advanced)
+	0, No, Advanced => Female (support: 0.28966, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, private, Full-time)
+	Intermediate, 0, No, private, Full-time => Female (support: 0.28933, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, No, Wife, Full-time)
+	0, Wife, No, Full-time => Female (support: 0.289, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, Wife)
+	0, Wife, No, Intermediate => Female (support: 0.286, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, low, Wife)
+	private, Wife, low => Female (support: 0.28566, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, private, Wife)
+	0, Wife, low, private => Female (support: 0.27633, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Part-time)
+	Part-time => Female (support: 0.27366, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, private, Full-time)
+	private, Intermediate, low, Full-time => Female (support: 0.27266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, private, Wife)
+	private, Wife, low, No => Female (support: 0.26833, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, low, Intermediate)
+	Wife, low, Intermediate => Female (support: 0.26666, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Part-time)
+	0, Part-time => Female (support: 0.26466, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, private, Full-time)
+	Intermediate, 0, low, private, Full-time => Female (support: 0.26466, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No, Part-time)
+	No, Part-time => Female (support: 0.263, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Never married)
+	Never married => Female (support: 0.26066, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, No, private, Full-time)
+	Intermediate, low, No, private, Full-time => Female (support: 0.26, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, No, private, Wife)
+	0, low, No, private, Wife => Female (support: 0.25966, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, Wife)
+	0, Wife, low, Intermediate => Female (support: 0.25866, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, Part-time)
+	low, Part-time => Female (support: 0.25833, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, No, Part-time)
+	0, No, Part-time => Female (support: 0.25433, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, low, private, Full-time)
+	Intermediate, 0, low, No, private, Full-time => Female (support: 0.25266, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Never married, No)
+	Never married, No => Female (support: 0.251, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, No, Wife)
+	Wife, low, No, Intermediate => Female (support: 0.251, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Never married)
+	0, Never married => Female (support: 0.24966, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, Part-time)
+	0, low, Part-time => Female (support: 0.24966, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, Part-time)
+	low, No, Part-time => Female (support: 0.24766, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Wife, Intermediate)
+	private, Wife, Intermediate => Female (support: 0.24433, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, low, Wife)
+	Intermediate, 0, low, No, Wife => Female (support: 0.24366, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Never married, No)
+	0, Never married, No => Female (support: 0.24, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, No, Part-time)
+	0, low, No, Part-time => Female (support: 0.23933, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, private, Wife)
+	0, Wife, Intermediate, private => Female (support: 0.238, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, Never married)
+	low, Never married => Female (support: 0.23466, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, low, Full-time)
+	Wife, low, Full-time => Female (support: 0.23466, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, No, private, Wife)
+	private, Wife, No, Intermediate => Female (support: 0.23066, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, low, Wife, Full-time)
+	0, Wife, low, Full-time => Female (support: 0.22833, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, low, Never married)
+	0, low, Never married => Female (support: 0.226, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, Never married, No)
+	low, Never married, No => Female (support: 0.226, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, No, private, Wife)
+	Intermediate, 0, No, private, Wife => Female (support: 0.225, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Wife, Full-time)
+	private, Wife, Full-time => Female (support: 0.22433, confidence: 1.0, lift: 1.0)
+
+Items: (Female, (38-49])
+	(38-49] => Female (support: 0.22166, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Never married)
+	private, Never married => Female (support: 0.221, confidence: 1.0, lift: 1.0)
+
+Items: (Female, low, No, Wife, Full-time)
+	Wife, low, No, Full-time => Female (support: 0.22066, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, low)
+	(49-65], low => Female (support: 0.22, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, low, No)
+	(49-65], low, No => Female (support: 0.21966, confidence: 1.0, lift: 1.0)
+
+Items: (Female, (38-49], No)
+	(38-49], No => Female (support: 0.219, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, private, Wife, Full-time)
+	0, Wife, Full-time, private => Female (support: 0.219, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Never married, 0, low, No)
+	0, low, Never married, No => Female (support: 0.21733, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, low, 0)
+	(49-65], low, 0 => Female (support: 0.21533, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, No, low, Wife, Full-time)
+	0, low, No, Wife, Full-time => Female (support: 0.21533, confidence: 1.0, lift: 1.0)
+
+Items: (Female, (17-28])
+	(17-28] => Female (support: 0.215, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, 0, low, No)
+	(49-65], low, No, 0 => Female (support: 0.215, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, (38-49])
+	0, (38-49] => Female (support: 0.21266, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, Never married, private)
+	0, Never married, private => Female (support: 0.21233, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Never married, No)
+	private, Never married, No => Female (support: 0.212, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, Part-time)
+	private, Part-time => Female (support: 0.21066, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, low, private, Wife)
+	private, Wife, low, Intermediate => Female (support: 0.21066, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, (38-49], No)
+	0, (38-49], No => Female (support: 0.21, confidence: 1.0, lift: 1.0)
+
+Items: (Female, No, private, Wife, Full-time)
+	private, Wife, No, Full-time => Female (support: 0.20933, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, private)
+	(49-65], private => Female (support: 0.208, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, No, private)
+	(49-65], No, private => Female (support: 0.208, confidence: 1.0, lift: 1.0)
+
+Items: (Female, (17-28], low)
+	(17-28], low => Female (support: 0.207, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, (17-28])
+	0, (17-28] => Female (support: 0.20666, confidence: 1.0, lift: 1.0)
+
+Items: (Female, 0, No, private, Wife, Full-time)
+	0, No, private, Wife, Full-time => Female (support: 0.205, confidence: 1.0, lift: 1.0)
+
+Items: (high, Female)
+	high => Female (support: 0.20433, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Wife, Advanced)
+	Wife, Advanced => Female (support: 0.20433, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, 0, private)
+	(49-65], 0, private => Female (support: 0.20433, confidence: 1.0, lift: 1.0)
+
+Items: (0, Female, private, Part-time)
+	0, private, Part-time => Female (support: 0.20433, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, 0, No, private)
+	(49-65], No, 0, private => Female (support: 0.20433, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, 0, low, private, Wife)
+	Intermediate, 0, low, private, Wife => Female (support: 0.20433, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, low, Never married)
+	private, low, Never married => Female (support: 0.20366, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Never married, 0, No, private)
+	0, Never married, No, private => Female (support: 0.20333, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, Intermediate)
+	(49-65], Intermediate => Female (support: 0.203, confidence: 1.0, lift: 1.0)
+
+Items: (Female, Intermediate, Part-time)
+	Intermediate, Part-time => Female (support: 0.20266, confidence: 1.0, lift: 1.0)
+
+Items: ((49-65], Female, No, Intermediate)
+	(49-65], No, Intermediate => Female (support: 0.20266, confidence: 1.0, lift: 1.0)
+
+Items: (private, Female, No, Part-time)
+	private, No, Part-time => Female (support: 0.20166, confidence: 1.0, lift: 1.0)
+
+Number of real results: 299
+Number of total rules: 157
+
