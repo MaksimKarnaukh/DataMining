@@ -1,4 +1,7 @@
 Number of results: 305
+Number of real results: 299
+Number of total rules: 157
+
 Items: (0, Female)
 	0 => Female (support: 0.96366, confidence: 1.0, lift: 1.0)
 
@@ -469,7 +472,4 @@ Items: ((49-65], Female, No, Intermediate)
 
 Items: (private, Female, No, Part-time)
 	private, No, Part-time => Female (support: 0.20166, confidence: 1.0, lift: 1.0)
-
-Number of real results: 299
-Number of total rules: 157
 

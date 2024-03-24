@@ -1,4 +1,7 @@
 Number of results: 718
+Number of real results: 716
+Number of total rules: 138
+
 Items: (Male, Husband)
 	Husband => Male (support: 0.39866, confidence: 1.0, lift: 1.5)
 
@@ -412,7 +415,4 @@ Items: ((49-65], Husband, 0, Male, No, private)
 
 Items: (0, Female, Wife, Intermediate)
 	0, Wife, Intermediate => Female (support: 0.10055, confidence: 1.0, lift: 3.0)
-
-Number of real results: 716
-Number of total rules: 138
 

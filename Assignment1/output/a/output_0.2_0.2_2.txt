@@ -1,4 +1,7 @@
 Number of results: 223
+Number of real results: 207
+Number of total rules: 1942
+
 Items: (0, No)
 	0 => No (support: 0.94155, confidence: 0.98569, lift: 0.99991)
 	No => 0 (support: 0.94155, confidence: 0.95513, lift: 0.99991)
@@ -2354,7 +2357,4 @@ Items: ((49-65], Intermediate, No, 0)
 	(49-65], No, 0 => Intermediate (support: 0.20133, confidence: 0.66446, lift: 0.98293)
 	(49-65], No, Intermediate => 0 (support: 0.20133, confidence: 0.98264, lift: 1.02870)
 	0, No, Intermediate => (49-65] (support: 0.20133, confidence: 0.31198, lift: 1.00137)
-
-Number of real results: 207
-Number of total rules: 1942
 

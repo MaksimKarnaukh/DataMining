@@ -1,4 +1,7 @@
 Number of results: 341
+Number of real results: 336
+Number of total rules: 177
+
 Items: (Male, No)
 	No => Male (support: 1.0, confidence: 1.0, lift: 1.0)
 
@@ -529,7 +532,4 @@ Items: (Male, Husband, Full-time, Intermediate)
 
 Items: (Husband, Intermediate, Male, No, Full-time)
 	Husband, No, Full-time, Intermediate => Male (support: 0.201, confidence: 1.0, lift: 1.0)
-
-Number of real results: 336
-Number of total rules: 177
 

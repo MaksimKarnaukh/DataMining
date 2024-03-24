@@ -1,4 +1,7 @@
 Number of results: 19
+Number of real results: 13
+Number of total rules: 42
+
 Items: (0, No)
 	0 => No (support: 0.94155, confidence: 0.98569, lift: 0.99991)
 	No => 0 (support: 0.94155, confidence: 0.95513, lift: 0.99991)
@@ -66,7 +69,4 @@ Items: (0, low, No)
 	0, No => low (support: 0.61411, confidence: 0.65223, lift: 0.99139)
 	0, low => No (support: 0.61411, confidence: 0.98187, lift: 0.99604)
 	low, No => 0 (support: 0.61411, confidence: 0.95047, lift: 0.99502)
-
-Number of real results: 13
-Number of total rules: 42
 
