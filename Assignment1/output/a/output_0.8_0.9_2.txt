@@ -2,7 +2,7 @@ Number of results: 3
 Number of real results: 1
 Number of total rules: 2
 
-Items: (No, 0)
+Items: (0, No)
 	0 => No (support: 0.94155, confidence: 0.98569, lift: 0.99991)
 	No => 0 (support: 0.94155, confidence: 0.95513, lift: 0.99991)
 
