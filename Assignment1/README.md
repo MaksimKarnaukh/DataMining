@@ -1,4 +1,4 @@
-# DataMining
+# Data Mining
 
 ### Assignment 1: Association Rules
 
