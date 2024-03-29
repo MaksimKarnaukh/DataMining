@@ -35,3 +35,6 @@ Assignment1/
 
 The notebooks are commented and structured in a way that the code is easy to follow. 
 The requirements.txt file contains the libraries used in the notebooks.
+
+At the end of association_rules.ipynb, I experimented with the split male/female dataset, 
+but this wasn't as useful in the end, so it shouldn't be looked at.
