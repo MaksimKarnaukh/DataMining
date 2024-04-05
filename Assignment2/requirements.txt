@@ -4,4 +4,5 @@ pandas
 openpyxl
 matplotlib
 seaborn
-apyori
+skikit-learn
+joblib
