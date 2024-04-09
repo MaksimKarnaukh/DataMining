@@ -79,14 +79,18 @@ def encode_nominal_features(dataset, nominal_features_lc, nominal_features_hc) -
     X_encoded = dataset.copy()
 
     # Encode nominal features with high cardinality using label encoding
-    nominal_encoded_hc = label_encoder.fit_transform(dataset[nominal_features_hc])
-    nominal_encoded_hc_df = pd.DataFrame(nominal_encoded_hc,
-                                         columns=[f'{feature}_encoded' for feature in nominal_features_hc])
+    nominal_encoded_hc_df = None
+    if nominal_features_hc:
+        nominal_encoded_hc = label_encoder.fit_transform(dataset[nominal_features_hc])
+        nominal_encoded_hc_df = pd.DataFrame(nominal_encoded_hc,
+                                             columns=[f'{feature}_encoded' for feature in nominal_features_hc])
 
     # Encode nominal features with low cardinality using one-hot encoding
-    nominal_encoded_lc = one_hot_encoder.fit_transform(dataset[nominal_features_lc])
-    nominal_encoded_df_lc = pd.DataFrame(nominal_encoded_lc,
-                                         columns=one_hot_encoder.get_feature_names_out(nominal_features_lc))
+    nominal_encoded_df_lc = None
+    if nominal_features_lc:
+        nominal_encoded_lc = one_hot_encoder.fit_transform(dataset[nominal_features_lc])
+        nominal_encoded_df_lc = pd.DataFrame(nominal_encoded_lc,
+                                             columns=one_hot_encoder.get_feature_names_out(nominal_features_lc))
 
     # Concatenate the encoded features to the resulting DataFrame and drop the original nominal features
     X_encoded = pd.concat([X_encoded, nominal_encoded_hc_df, nominal_encoded_df_lc], axis=1).drop(
