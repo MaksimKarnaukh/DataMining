@@ -1,5 +1,8 @@
+from typing import Tuple, Any
+
 import pandas as pd
 from joblib import dump, load
+from pandas import DataFrame
 
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
@@ -58,8 +61,8 @@ def get_features_and_target(dataset: pd.DataFrame, target_column: str) -> tuple[
     :param target_column: target column name
     :return: (features_df, target_df)
     """
-    features_df = dataset.drop(columns=[target_column])
-    target_df = dataset[target_column]
+    features_df: pd.DataFrame = dataset.drop(columns=[target_column])
+    target_df: pd.Series | pd.DataFrame = dataset[target_column]
     return features_df, target_df
 
 
@@ -73,10 +76,10 @@ def encode_nominal_features(dataset, nominal_features_lc, nominal_features_hc) -
     """
 
     # Initialize encoders
-    one_hot_encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
-    label_encoder = LabelEncoder()
+    one_hot_encoder: OneHotEncoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+    label_encoder: LabelEncoder = LabelEncoder()
 
-    X_encoded = dataset.copy()
+    X_encoded: pd.DataFrame = dataset.copy()
 
     # Encode nominal features with high cardinality using label encoding
     nominal_encoded_hc_df = None
@@ -97,3 +100,25 @@ def encode_nominal_features(dataset, nominal_features_lc, nominal_features_hc) -
         columns=nominal_features_lc + nominal_features_hc)
 
     return X_encoded
+
+
+def encode_all_features(X: pd.DataFrame, y: pd.Series | pd.DataFrame, columns_to_exclude: list[str]) -> tuple[DataFrame, Any]:
+    """
+    Encode all features in the dataset.
+    :param X: features dataset
+    :param y: target dataset
+    :param columns_to_exclude: features to exclude from encoding and from the dataset in general
+    :return: encoded X and y datasets
+    """
+    X_encoded: pd.DataFrame = X.drop(columns=columns_to_exclude)
+
+    # List of nominal features
+    nominal_features_lc = list({'workclass', 'marital status', 'gave birth this year', 'sex'} - set(
+        columns_to_exclude))  # low cardinality features
+    nominal_features_hc = list({'occupation'} - set(columns_to_exclude))  # high cardinality features
+
+    # Encoded datasets
+    X_encoded = encode_nominal_features(X_encoded, nominal_features_lc, nominal_features_hc)
+    y_encoded: pd.Series | pd.DataFrame = y.map({'low': 0, 'high': 1})
+
+    return X_encoded, y_encoded
