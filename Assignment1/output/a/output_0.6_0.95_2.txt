@@ -6,15 +6,15 @@ Items: (0, No)
 	0 => No (support: 0.94155, confidence: 0.98569, lift: 0.99991)
 	No => 0 (support: 0.94155, confidence: 0.95513, lift: 0.99991)
 
-Items: (No, private)
+Items: (private, No)
 	private => No (support: 0.72744, confidence: 0.98540, lift: 0.99961)
 
-Items: (0, private)
+Items: (private, 0)
 	private => 0 (support: 0.70366, confidence: 0.95319, lift: 0.99787)
 
 Items: (private, 0, No)
-	0, private => No (support: 0.69333, confidence: 0.98531, lift: 0.99953)
-	No, private => 0 (support: 0.69333, confidence: 0.95310, lift: 0.99778)
+	private, 0 => No (support: 0.69333, confidence: 0.98531, lift: 0.99953)
+	private, No => 0 (support: 0.69333, confidence: 0.95310, lift: 0.99778)
 
 Items: (Intermediate, No)
 	Intermediate => No (support: 0.66688, confidence: 0.98652, lift: 1.00075)
