@@ -10,8 +10,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import SequentialFeatureSelector
 
 
-def seq_feat_selection(model, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backwards",
-                       scoring: str = "accuracy"):
+def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backwards",
+                       scoring: str = "accuracy") -> None:
     """
     Perform sequential feature selection using SequentialFeatureSelector from sklearn.
     https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html#:~:text=This%20Sequential%20Feature%20Selector%20adds,validation%20score%20of%20an%20estimator.
@@ -22,16 +22,13 @@ def seq_feat_selection(model, X_train: pd.DataFrame, y_train: pd.Series, directi
     :param scoring:
     :return:
     """
-    # Create Sequential Feature Selector
-    sfs = SequentialFeatureSelector(model,
-                                    direction=direction,  # backward feature elimination
-                                    scoring=scoring,
-                                    cv=StratifiedKFold())
+    sfs: SequentialFeatureSelector = SequentialFeatureSelector(model,
+                                                               direction=direction,  # backward feature elimination
+                                                               scoring=scoring,
+                                                               cv=StratifiedKFold())
 
-    # Fit the feature selector to training data
     sfs.fit(X_train, y_train)
 
-    # Get selected features and feature indices
     selected_features = sfs.get_support()
     selected_feature_indices = [i for i, val in enumerate(selected_features) if val]
 
@@ -40,35 +37,37 @@ def seq_feat_selection(model, X_train: pd.DataFrame, y_train: pd.Series, directi
         print(f"Feature {i + 1}: {feature}")
 
 
-def tune_knn(model, X_train: pd.DataFrame, y_train: pd.Series, X_test, y_test, param_grid) -> Tuple[
-    dict, KNeighborsClassifier, float]:
+def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
+               param_grid: dict) -> Tuple[dict, any, float]:
     """
     Tune the hyperparameters of the K-Nearest Neighbors model using GridSearchCV.
     https://medium.com/@agrawalsam1997/hyperparameter-tuning-of-knn-classifier-a32f31af25c7
     https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
-    :param X_encoded:
-    :param y_encoded:
+    :param model:
+    :param X_train:
+    :param y_train:
     :param X_test:
     :param y_test:
+    :param param_grid:
     :return:
     """
     # Perform grid search with 5-fold cross-validation
-    gscv = GridSearchCV(model, param_grid=param_grid, cv=5, verbose=1)
+    gscv: GridSearchCV = GridSearchCV(model, param_grid=param_grid, cv=5, verbose=1)
 
     gscv.fit(X_train, y_train)
 
-    best_params = gscv.best_params_
-    best_model = gscv.best_estimator_
-    best_accuracy = best_model.score(X_test, y_test)
+    best_params: dict = gscv.best_params_
+    best_model: any = gscv.best_estimator_
+    best_accuracy: float = best_model.score(X_test, y_test)
 
     return best_params, best_model, best_accuracy
 
 
-def forward_feat_selection_hypertuning(X_encoded: pd.DataFrame, y_encoded: pd.Series) -> Tuple[List[str], dict, float]:
+def forward_feat_selection_hypertuning(X_train: pd.DataFrame, y_train: pd.Series) -> Tuple[List[str], dict, float]:
     """
     Forward feature selection with hyperparameter tuning for K-Nearest Neighbors.
-    :param X_encoded: features dataset, with features encoded
-    :param y_encoded: target dataset, with target encoded
+    :param X_train: features dataset, with features encoded
+    :param y_train: target dataset, with target encoded
     :return: (best subset of features, best hyperparameters, best model accuracy)
     """
     best_subset: List[str] = []
@@ -78,9 +77,9 @@ def forward_feat_selection_hypertuning(X_encoded: pd.DataFrame, y_encoded: pd.Se
     remaining_features = [['age'],
                           ['education'],
                           ['workinghours'],
-                          [col for col in X_encoded.columns if col.startswith('workclass')],
-                          [col for col in X_encoded.columns if col.startswith('marital status')],
-                          [col for col in X_encoded.columns if col.startswith('occupation')]]
+                          [col for col in X_train.columns if col.startswith('workclass')],
+                          [col for col in X_train.columns if col.startswith('marital status')],
+                          [col for col in X_train.columns if col.startswith('occupation')]]
 
     param_grid = {
         'n_neighbors': np.arange(2, 30, 1),
@@ -94,24 +93,24 @@ def forward_feat_selection_hypertuning(X_encoded: pd.DataFrame, y_encoded: pd.Se
 
         for feature_cat in remaining_features:
             # Combine the current best subset with the new feature
-            current_subset = best_subset + feature_cat if best_subset else feature_cat.copy()
+            current_subset: List[str] = best_subset + feature_cat if best_subset else feature_cat.copy()
 
-            X_subset = X_encoded[current_subset]
-            X_train, X_val, y_train, y_val = train_test_split(X_subset, y_encoded, test_size=0.2, random_state=42)
+            X_subset: pd.DataFrame = X_train[current_subset]
+            X_train, X_val, y_train, y_val = train_test_split(X_subset, y_train, test_size=0.2, random_state=42)
 
-            best_params, best_model, score = tune_knn(KNeighborsClassifier(), X_subset, y_encoded, X_val, y_val,
-                                                      param_grid)
+            best_params, best_model, score = tune_model(KNeighborsClassifier(), X_subset, y_train, X_val, y_val,
+                                                        param_grid)
 
             subset_scores.append(score)
             subset_params.append(best_params)
 
-        # Select the feature that improves performance the most
+        # We select the feature that improves performance the most
         best_index = subset_scores.index(max(subset_scores))
         best_score = subset_scores[best_index]
         best_params = subset_params[best_index]
         best_feature = remaining_features[best_index]
 
-        # Update the best subset and remaining features
+        # We update the best subset and remaining features
         best_subset = best_subset + best_feature if best_subset else best_feature.copy()
         del remaining_features[best_index]
 
@@ -127,7 +126,8 @@ https://scikit-learn.org/stable/auto_examples/model_selection/plot_multi_metric_
 """
 
 
-def multi_metric_cv(model, scoring, X_train, y_train, param_grid, refit="AUC"):
+def multi_metric_cv(model: any, scoring: dict, X_train: pd.DataFrame, y_train: pd.Series, param_grid: dict,
+                    refit: str = "AUC") -> dict:
     """
     Perform GridSearchCV with multiple scorers for a given model.
     :param model:
@@ -136,10 +136,9 @@ def multi_metric_cv(model, scoring, X_train, y_train, param_grid, refit="AUC"):
     :param y_train:
     :param param_grid:
     :param refit:
-    :return:
+    :return: results (dict)
     """
-    # Initialize GridSearchCV
-    gs = GridSearchCV(
+    gs: GridSearchCV = GridSearchCV(
         model,
         param_grid=param_grid,
         scoring=scoring,
@@ -148,15 +147,13 @@ def multi_metric_cv(model, scoring, X_train, y_train, param_grid, refit="AUC"):
         return_train_score=True,
     )
 
-    # Fit the model
     gs.fit(X_train, y_train)
-    results = gs.cv_results_
-
-    return results
+    return gs.cv_results_
 
 
-def plot_multi_score_cv_results(x_label, x_min_val, x_max_val, y_min_val, y_max_val, results, param_name, param_type,
-                                scoring):
+def plot_multi_score_cv_results(x_label: str, x_min_val: float, x_max_val: float, y_min_val: float, y_max_val: float,
+                                results: dict, param_name: str, param_type: any,
+                                scoring: dict) -> None:
     """
     Plot the results of GridSearchCV with multiple scorers.
     :param x_label:
@@ -170,7 +167,6 @@ def plot_multi_score_cv_results(x_label, x_min_val, x_max_val, y_min_val, y_max_
     :param scoring:
     :return:
     """
-    # Plot the results
     plt.figure(figsize=(13, 13))
     plt.title("GridSearchCV evaluating using multiple scorers simultaneously", fontsize=16)
 
@@ -181,9 +177,8 @@ def plot_multi_score_cv_results(x_label, x_min_val, x_max_val, y_min_val, y_max_
     ax.set_xlim(x_min_val, x_max_val - 1)
     ax.set_ylim(y_min_val, y_max_val)
 
-    # Get the regular numpy array from the MaskedArray
     X_axis = np.array(results[param_name].data, dtype=param_type)
-    colors = ["g", "b", "r", "y", "m", "k"]
+    colors = ["g", "b", "r", "y", "m", "k"]  # don't pass more than 6 scorers
 
     for scorer, color in zip(sorted(scoring), colors[:len(scoring)]):
         for sample, style in (("train", "--"), ("test", "-")):
@@ -222,7 +217,6 @@ def plot_multi_score_cv_results(x_label, x_min_val, x_max_val, y_min_val, y_max_
             ms=8,
         )
 
-        # Annotate the best score for that scorer
         ax.annotate("%0.2f" % best_score, (X_axis[best_index], best_score + 0.005))
 
     plt.legend(loc="best")
