@@ -29,7 +29,8 @@ def save_dataset(dataset: pd.DataFrame, file_path: str):
 
 def save_model(model: any, file_path: str):
     """
-    Save the model to the file path. Make sure the file path has .joblib extension
+    Save the model to the file path. Make sure the file path has .joblib extension.
+    https://scikit-learn.org/stable/model_persistence.html
     :param model: model object
     :param file_path: file path to save the model
     :return:
