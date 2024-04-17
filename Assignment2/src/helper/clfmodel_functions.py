@@ -10,7 +10,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import SequentialFeatureSelector
 
 
-def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backwards",
+def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backward",
                        scoring: str = "accuracy") -> None:
     """
     Perform sequential feature selection using SequentialFeatureSelector from sklearn.
@@ -63,7 +63,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
     return best_params, best_model, best_accuracy
 
 
-def forward_feat_selection_hypertuning(X_train: pd.DataFrame, y_train: pd.Series) -> Tuple[List[str], dict, float]:
+def forward_feat_selection_hypertuning(X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val) -> Tuple[List[str], dict, float]:
     """
     Forward feature selection with hyperparameter tuning for K-Nearest Neighbors.
     :param X_train: features dataset, with features encoded
@@ -96,9 +96,9 @@ def forward_feat_selection_hypertuning(X_train: pd.DataFrame, y_train: pd.Series
             current_subset: List[str] = best_subset + feature_cat if best_subset else feature_cat.copy()
 
             X_subset: pd.DataFrame = X_train[current_subset]
-            X_train, X_val, y_train, y_val = train_test_split(X_subset, y_train, test_size=0.2, random_state=42)
+            X_val_subset: pd.DataFrame = X_val[current_subset]
 
-            best_params, best_model, score = tune_model(KNeighborsClassifier(), X_subset, y_train, X_val, y_val,
+            best_params, best_model, score = tune_model(KNeighborsClassifier(), X_subset, y_train, X_val_subset, y_val,
                                                         param_grid)
 
             subset_scores.append(score)
