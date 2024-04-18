@@ -68,8 +68,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
         model.set_params(**gscv.cv_results_['params'][i])
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
-        # score = model.score(X_test, y_test) # this is the same as accuracy_score(y_test, y_pred)
+        accuracy = accuracy_score(y_test, y_pred)  # score = model.score(X_test, y_test) # this is the same as accuracy_score(y_test, y_pred)
 
         if accuracy > best_accuracy:
             best_params = gscv.cv_results_['params'][i]
@@ -183,7 +182,7 @@ def plot_multi_score_cv_results(x_label: str, x_min_val: float, x_max_val: float
     :param scoring:
     :return:
     """
-    plt.figure(figsize=(13, 13))
+    plt.figure(figsize=(10, 10))
     plt.title("GridSearchCV evaluating using multiple scorers simultaneously", fontsize=16)
 
     plt.xlabel(x_label)
