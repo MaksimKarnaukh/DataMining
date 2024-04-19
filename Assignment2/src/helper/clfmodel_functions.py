@@ -54,7 +54,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
     :return:
     """
     # Perform grid search with 5-fold cross-validation
-    gscv: GridSearchCV = GridSearchCV(model, param_grid=param_grid, cv=cv, verbose=2)
+    gscv: GridSearchCV = GridSearchCV(model, param_grid=param_grid, cv=cv, verbose=1)
     gscv.fit(X_train, y_train)
 
     top_n_results_idx = np.argsort(gscv.cv_results_['mean_test_score'])[-top_n:]
