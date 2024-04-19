@@ -38,7 +38,7 @@ def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, di
 
 
 def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
-               param_grid: dict, top_n: int = 10) -> Tuple[dict, any, float]:
+               param_grid: dict, top_n: int = 10, cv: int = 5) -> Tuple[dict, any, float]:
     """
     Tune the hyperparameters of the K-Nearest Neighbors model using GridSearchCV.
     https://medium.com/@agrawalsam1997/hyperparameter-tuning-of-knn-classifier-a32f31af25c7
@@ -50,10 +50,11 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
     :param y_test:
     :param param_grid:
     :param top_n: Number of top-performing models to return.
+    :param cv: Number of folds for cross-validation.
     :return:
     """
     # Perform grid search with 5-fold cross-validation
-    gscv: GridSearchCV = GridSearchCV(model, param_grid=param_grid, cv=5, verbose=1)
+    gscv: GridSearchCV = GridSearchCV(model, param_grid=param_grid, cv=cv, verbose=2)
     gscv.fit(X_train, y_train)
 
     top_n_results_idx = np.argsort(gscv.cv_results_['mean_test_score'])[-top_n:]
@@ -64,7 +65,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
 
     # Evaluate the top N models on the test set
     for i in top_n_results_idx:
-        model = KNeighborsClassifier()
+        model = model.__class__()
         model.set_params(**gscv.cv_results_['params'][i])
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
