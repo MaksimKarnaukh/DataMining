@@ -6,3 +6,5 @@ matplotlib
 seaborn
 skikit-learn
 joblib
+mixed-naive-bayes
+numpy
