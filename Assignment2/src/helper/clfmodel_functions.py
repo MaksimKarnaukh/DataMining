@@ -69,7 +69,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
         model.set_params(**gscv.cv_results_['params'][i])
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)  # score = model.score(X_test, y_test) # this is the same as accuracy_score(y_test, y_pred)
+        accuracy = accuracy_score(y_test, y_pred)
 
         if accuracy > best_accuracy:
             best_params = gscv.cv_results_['params'][i]
@@ -79,59 +79,76 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
     return best_params, best_model, best_accuracy
 
 
-def forward_feat_selection_hypertuning(X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val) -> Tuple[List[str], dict, float]:
+def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val, epsilon: float = 1e-3) -> Tuple[List[str], dict, float]:
     """
     Forward feature selection with hyperparameter tuning for K-Nearest Neighbors.
+    :param model: Classifier model
     :param X_train: features dataset, with features encoded
     :param y_train: target dataset, with target encoded
+    :param X_val: validation features dataset, with features encoded
+    :param y_val: validation target dataset, with target encoded
+    :param epsilon: threshold for improvement in accuracy
     :return: (best subset of features, best hyperparameters, best model accuracy)
     """
     best_subset: List[str] = []
     best_params: dict = None
     best_score: float = 0.0
 
-    remaining_features = [['age'],
-                          ['education'],
-                          ['workinghours'],
+    columns_to_exclude = []
+
+    remaining_features = [list(set(['age']) - set(columns_to_exclude)),
+                          list(set(['education']) - set(columns_to_exclude)),
+                          list(set(['workinghours']) - set(columns_to_exclude)),
+                          list(set(['ability to speak english']) - set(columns_to_exclude)),
                           [col for col in X_train.columns if col.startswith('workclass')],
                           [col for col in X_train.columns if col.startswith('marital status')],
-                          [col for col in X_train.columns if col.startswith('occupation')]]
+                          [col for col in X_train.columns if col.startswith('occupation')],
+                          [col for col in X_train.columns if col.startswith('sex')],
+                          [col for col in X_train.columns if col.startswith('gave birth this year')]]
 
-    param_grid = {
-        'n_neighbors': np.arange(2, 30, 1),
-        'weights': ['uniform', 'distance'],
-        'p': [1, 2]
-    }
+    # remove all empty lists from remaining_features
+    remaining_features = [feature_cat for feature_cat in remaining_features if len(feature_cat) > 0]
 
     while remaining_features:
         subset_scores = []
         subset_params = []
 
         for feature_cat in remaining_features:
+            print("Feature category:", feature_cat)
+            if len(feature_cat) == 0:
+                print("Empty feature category")
+                continue
+
             # Combine the current best subset with the new feature
             current_subset: List[str] = best_subset + feature_cat if best_subset else feature_cat.copy()
 
             X_subset: pd.DataFrame = X_train[current_subset]
             X_val_subset: pd.DataFrame = X_val[current_subset]
 
-            best_params, best_model, score = tune_model(KNeighborsClassifier(), X_subset, y_train, X_val_subset, y_val,
-                                                        param_grid)
+            best_params, best_model, score = tune_model(model, X_subset, y_train, X_val_subset, y_val, param_grid)
 
             subset_scores.append(score)
             subset_params.append(best_params)
 
         # We select the feature that improves performance the most
         best_index = subset_scores.index(max(subset_scores))
-        best_score = subset_scores[best_index]
-        best_params = subset_params[best_index]
-        best_feature = remaining_features[best_index]
+        best_score_curr = subset_scores[best_index]
 
-        # We update the best subset and remaining features
-        best_subset = best_subset + best_feature if best_subset else best_feature.copy()
-        del remaining_features[best_index]
+        if best_score_curr > best_score + epsilon:
+            print(f"{best_score_curr} > {best_score + epsilon}? Yes!")
+            best_score = best_score_curr
+            best_params = subset_params[best_index]
+            best_feature = remaining_features[best_index]
 
-        print("Best subset:", best_subset)
-        print("Remaining features:", remaining_features)
+            # We update the best subset and remaining features
+            best_subset = best_subset + best_feature if best_subset else best_feature.copy()
+            del remaining_features[best_index]
+
+            print("Best subset:", best_subset)
+            print("Remaining features:", remaining_features)
+        else:  # If the current best feature does not improve performance, no feature after it will, so we break
+            print(f"{best_score_curr} > {best_score + epsilon}? No! We break.")
+            break
 
     return best_subset, best_params, best_score
 
