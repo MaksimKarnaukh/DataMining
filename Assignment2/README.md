@@ -39,5 +39,5 @@ Algorithm
   - https://medium.com/@janwithb/unmasking-bias-a-practical-example-of-bias-detection-for-a-loan-approval-ai-model-892ee3cb59f7
   - https://medium.com/north-east-data-science-review/diving-into-gender-bias-in-loan-approval-7472f288f77f
   - https://cs.yale.edu/bias/blog/jekyll/update/2018/11/06/fair-classification.html
-  - https://jp-tok.dataplatform.cloud.ibm.com/docs/content/wsj/model/wos-disparate-impact.html?context=cpdaas
+  - https://jp-tok.dataplatform.cloud.ibm.com/docs/content/wsj/model/wos-fairness-metrics-ovr.html?context=cpdaas
   - https://machinelearningmastery.com/random-oversampling-and-undersampling-for-imbalanced-classification/

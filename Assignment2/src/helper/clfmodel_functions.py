@@ -6,12 +6,11 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import make_scorer, accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import SequentialFeatureSelector
 
 
 def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backward",
-                       scoring: str = "accuracy") -> None:
+                       scoring: str = "accuracy", sfs_tol: float = 0.001) -> None:
     """
     Perform sequential feature selection using SequentialFeatureSelector from sklearn.
     https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html#:~:text=This%20Sequential%20Feature%20Selector%20adds,validation%20score%20of%20an%20estimator.
@@ -20,12 +19,14 @@ def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, di
     :param y_train:
     :param direction:
     :param scoring:
+    :param sfs_tol:
     :return:
     """
     sfs: SequentialFeatureSelector = SequentialFeatureSelector(model,
-                                                               direction=direction,  # backward feature elimination
+                                                               direction=direction,
                                                                scoring=scoring,
-                                                               cv=StratifiedKFold())
+                                                               cv=StratifiedKFold(),
+                                                               tol=sfs_tol)
 
     sfs.fit(X_train, y_train)
 
@@ -114,7 +115,6 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
         subset_params = []
 
         for feature_cat in remaining_features:
-            print("Feature category:", feature_cat)
             if len(feature_cat) == 0:
                 print("Empty feature category")
                 continue
@@ -135,7 +135,6 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
         best_score_curr = subset_scores[best_index]
 
         if best_score_curr > best_score + epsilon:
-            print(f"{best_score_curr} > {best_score + epsilon}? Yes!")
             best_score = best_score_curr
             best_params = subset_params[best_index]
             best_feature = remaining_features[best_index]
@@ -147,7 +146,6 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
             print("Best subset:", best_subset)
             print("Remaining features:", remaining_features)
         else:  # If the current best feature does not improve performance, no feature after it will, so we break
-            print(f"{best_score_curr} > {best_score + epsilon}? No! We break.")
             break
 
     return best_subset, best_params, best_score
