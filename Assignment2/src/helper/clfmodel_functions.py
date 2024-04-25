@@ -10,7 +10,7 @@ from sklearn.feature_selection import SequentialFeatureSelector
 
 
 def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backward",
-                       scoring: str = "accuracy", sfs_tol: float = 0.001) -> None:
+                       scoring: str = "accuracy", sfs_tol: float = 0.0001) -> None:
     """
     Perform sequential feature selection using SequentialFeatureSelector from sklearn.
     https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html#:~:text=This%20Sequential%20Feature%20Selector%20adds,validation%20score%20of%20an%20estimator.
