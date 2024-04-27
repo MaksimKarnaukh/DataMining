@@ -146,6 +146,8 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
             print("Best subset:", best_subset)
             print("Remaining features:", remaining_features)
         else:  # If the current best feature does not improve performance, no feature after it will, so we break
+            print("Best subset:", best_subset)
+            print("Remaining features:", remaining_features)
             break
 
     return best_subset, best_params, best_score
