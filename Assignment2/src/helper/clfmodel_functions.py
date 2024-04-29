@@ -8,6 +8,8 @@ from sklearn.metrics import make_scorer, accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.feature_selection import SequentialFeatureSelector
 
+from .fairness_functions import split_male_female_metrics, calculate_composite_metric
+
 
 def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, direction: str = "backward",
                        scoring: str = "accuracy", sfs_tol: float = 0.0001) -> None:
@@ -39,7 +41,7 @@ def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, di
 
 
 def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
-               param_grid: dict, top_n: int = 10, cv: int = 5) -> Tuple[dict, any, float]:
+               param_grid: dict, top_n: int = 10, cv: int = 5, ensure_fairness: bool = False) -> Tuple[dict, any, float]:
     """
     Tune the hyperparameters of the K-Nearest Neighbors model using GridSearchCV.
     https://medium.com/@agrawalsam1997/hyperparameter-tuning-of-knn-classifier-a32f31af25c7
@@ -63,24 +65,50 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
     best_params: dict = dict()
     best_model: any = None
     best_accuracy: float = 0.0
+    best_composite_metric = 0.0  # best composite metric for balance between fairness and accuracy
 
-    # Evaluate the top N models on the test set
-    for i in top_n_results_idx:
-        model = model.__class__()
-        model.set_params(**gscv.cv_results_['params'][i])
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
+    if not ensure_fairness:  # the standard case, this was the original function
+        # Evaluate the top N models on the test set
+        for i in top_n_results_idx:
+            model = model.__class__()
+            model.set_params(**gscv.cv_results_['params'][i])
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            accuracy = accuracy_score(y_test, y_pred)
 
-        if accuracy > best_accuracy:
-            best_params = gscv.cv_results_['params'][i]
-            best_model = model
-            best_accuracy = accuracy
+            if accuracy > best_accuracy:
+                best_params = gscv.cv_results_['params'][i]
+                best_model = model
+                best_accuracy = accuracy
 
-    return best_params, best_model, best_accuracy
+        return best_params, best_model, best_accuracy
+
+    else:  # the new case, where we try to ensure some fairness
+        # Evaluate the top N models on the test set
+        for i in np.argsort(gscv.cv_results_['mean_test_score'])[-30:]:
+            model = model.__class__()
+            model.set_params(**gscv.cv_results_['params'][i])
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            accuracy = accuracy_score(y_test, y_pred)
+
+            # Calculate fairness metrics (e.g., FPR, TPR) here
+            fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_train, X_test, y_train, y_test)
+
+            # Calculate composite metric
+            composite_metric = calculate_composite_metric(accuracy, fpr_male, fpr_female, tpr_male, tpr_female)
+
+            # Update best_params, best_model, and best_accuracy if composite_metric is better
+            if composite_metric > best_composite_metric:
+                best_params = gscv.cv_results_['params'][i]
+                best_model = model
+                best_accuracy = accuracy
+                best_composite_metric = composite_metric
+
+        return best_params, best_model, best_composite_metric
 
 
-def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val, epsilon: float = 1e-3) -> Tuple[List[str], dict, float]:
+def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val, epsilon: float = 1e-3, ensure_fairness: bool = False) -> Tuple[List[str], dict, float]:
     """
     Forward feature selection with hyperparameter tuning for K-Nearest Neighbors.
     :param model: Classifier model
@@ -125,7 +153,7 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
             X_subset: pd.DataFrame = X_train[current_subset]
             X_val_subset: pd.DataFrame = X_val[current_subset]
 
-            best_params, best_model, score = tune_model(model, X_subset, y_train, X_val_subset, y_val, param_grid)
+            best_params, best_model, score = tune_model(model, X_subset, y_train, X_val_subset, y_val, param_grid, ensure_fairness=ensure_fairness)
 
             subset_scores.append(score)
             subset_params.append(best_params)

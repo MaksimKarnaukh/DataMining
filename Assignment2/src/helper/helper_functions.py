@@ -77,7 +77,6 @@ def encode_nominal_features(dataset: pd.DataFrame, nominal_features_lc: List[str
     :return: encoded dataset
     """
 
-    # Initialize encoders
     label_encoder: LabelEncoder = LabelEncoder()
 
     X_encoded: pd.DataFrame = dataset.copy()

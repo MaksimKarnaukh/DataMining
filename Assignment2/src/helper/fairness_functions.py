@@ -5,10 +5,11 @@ import numpy as np
 import pandas as pd
 from typing import Tuple, Any
 
-from sklearn.metrics import confusion_matrix
 from sklearn.neighbors import KNeighborsClassifier
 from aif360.sklearn.metrics import disparate_impact_ratio, statistical_parity_difference, equal_opportunity_difference, \
     average_odds_difference
+from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, accuracy_score
+from IPython.display import display
 
 
 def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
@@ -92,6 +93,26 @@ def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.D
     return DI, DS, EO, EOdds, conf_matrix
 
 
+def print_statistical_measures(DI, DS, EO, EOdds):
+    print(f"Disparate Impact (DI): {DI:.3f}")
+    print(f"Discrimination Score (DS): {DS:.3f}")
+    print(f"Equal Opportunity Difference (EO): {EO:.3f}")
+    print(f"Equalized Odds (EOdds): {EOdds:.3f}")
+
+
+def calc_fairness_metrics(conf_matrix):
+    tp = conf_matrix[1, 1]
+    tn = conf_matrix[0, 0]
+    fp = conf_matrix[0, 1]
+    fn = conf_matrix[1, 0]
+
+    fpr = fp / (fp + tn)
+    tpr = tp / (tp + fn)
+    ppp = tp / (tp + fp)
+
+    return fpr, tpr, ppp
+
+
 def print_conf_matrix(conf_matrix):
     total = conf_matrix.sum()
     tp = conf_matrix[1, 1]
@@ -109,3 +130,79 @@ def print_conf_matrix(conf_matrix):
     print("FPR: ", fp / (fp + tn))
     print("TPR: ", tp / (tp + fn))
     print("PPP: ", tp / (tp + fp))
+
+
+def get_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Tuple[float, float, float, float]:
+    accuracy = accuracy_score(y_true, y_pred)
+    precision = precision_score(y_true, y_pred)
+    recall = recall_score(y_true, y_pred)
+    f1 = f1_score(y_true, y_pred)
+
+    return accuracy, precision, recall, f1
+
+
+def split_male_female_metrics(model, X_train, X_test, y_train, y_test, print_metrics: bool = False):
+    X_male_train = X_train[X_train['sex_Male'] == 1]
+    X_male_test = X_test[X_test['sex_Male'] == 1]
+    y_male_train = y_train[X_train['sex_Male'] == 1]
+    y_male_test = y_test[X_test['sex_Male'] == 1]
+
+    y_male_pred = model.predict(X_male_test)
+
+    male_accuracy, male_precision, male_recall, male_f1 = get_metrics(y_male_test, y_male_pred)
+
+    X_female_train = X_train[X_train['sex_Male'] == 0]
+    X_female_test = X_test[X_test['sex_Male'] == 0]
+    y_female_train = y_train[X_train['sex_Male'] == 0]
+    y_female_test = y_test[X_test['sex_Male'] == 0]
+
+    y_female_pred = model.predict(X_female_test)
+
+    female_accuracy, female_precision, female_recall, female_f1 = get_metrics(y_female_test, y_female_pred)
+
+    # calculate male conf matrix
+    conf_matrix_male = confusion_matrix(y_male_test, y_male_pred)
+    # calculate male conf matrix
+    conf_matrix_female = confusion_matrix(y_female_test, y_female_pred)
+
+    fpr_male, tpr_male, ppp_male = calc_fairness_metrics(conf_matrix_male)
+    fpr_female, tpr_female, ppp_female = calc_fairness_metrics(conf_matrix_female)
+
+    if print_metrics:
+        print("\nConfusion Matrix for Male group")
+        print_conf_matrix(conf_matrix_male)
+        print("\nConfusion Matrix for Female group")
+        print_conf_matrix(conf_matrix_female)
+
+        # Compare the model's accuracy for male and female groups
+        metrics_table = pd.DataFrame({
+            'Gender': ['Male', 'Female'],
+            'Accuracy': [male_accuracy, female_accuracy],
+            'Precision': [male_precision, female_precision],
+            'Recall': [male_recall, female_recall],
+            'F1-score': [male_f1, female_f1]
+        })
+        display(metrics_table)
+
+    return fpr_male, fpr_female, tpr_male, tpr_female
+
+
+def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: float, tpr_male: float, tpr_female: float, accuracy_weight: float = 0.7, fairness_weight: float = 0.3):
+    """
+    Calculate the composite metric that balances accuracy and fairness.
+    :param accuracy: Accuracy of the model.
+    :param fpr_male: False Positive Rate (FPR) for males.
+    :param fpr_female: False Positive Rate (FPR) for females.
+    :param tpr_male: True Positive Rate (TPR) for males.
+    :param tpr_female: True Positive Rate (TPR) for females.
+    :param accuracy_weight: Weight assigned to accuracy (default: 0.7).
+    :param fairness_weight: Weight assigned to fairness metrics (default: 0.3).
+    :return: Composite metric value.
+    """
+    # Calculate fairness metric as the absolute difference between FPR for males and females
+    fairness_metric = abs(fpr_male - fpr_female)
+
+    # Calculate composite metric as a weighted sum of accuracy and fairness metrics
+    composite_metric = (accuracy_weight * accuracy) + (fairness_weight * (1 - fairness_metric))
+
+    return composite_metric

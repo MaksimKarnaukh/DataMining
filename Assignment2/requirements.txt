@@ -10,3 +10,4 @@ mixed-naive-bayes==0.0.3
 numpy==1.26.4
 imblearn==0.0
 aif360==0.6.1
+ipython==8.22.2
