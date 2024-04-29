@@ -1,13 +1,18 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import numpy as np
 import pandas as pd
-from typing import Tuple
+from typing import Tuple, Any
+
+from sklearn.metrics import confusion_matrix
 from sklearn.neighbors import KNeighborsClassifier
 from aif360.sklearn.metrics import disparate_impact_ratio, statistical_parity_difference, equal_opportunity_difference, \
     average_odds_difference
 
 
 def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
-                       sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[float, float, float, float]:
+                       sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[Any, Any, Any, Any, Any]:
     """
     Calculate the following metrics:
     -Disparate Impact (DI) metric => DI = P(Yˆ = +|Z = 0) / P(Yˆ = +|Z = 1)
@@ -51,12 +56,14 @@ def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.D
     knn_model.fit(X_train, y_train)
     y_pred = knn_model.predict(X_test)
 
+    conf_matrix = confusion_matrix(y_test, y_pred)
+
     if use_lib_implementation:
         disparate_impact = disparate_impact_ratio(y_true=y_test, y_pred=y_pred, prot_attr=X_test[sensitive_attr])
         stat_par_diff = statistical_parity_difference(y_true=y_test, y_pred=y_pred, prot_attr=X_test[sensitive_attr])
         EO = equal_opportunity_difference(y_true=y_test, y_pred=y_pred, prot_attr=X_test[sensitive_attr])
         AOD = average_odds_difference(y_true=y_test, y_pred=y_pred, prot_attr=X_test[sensitive_attr])
-        return disparate_impact, stat_par_diff, EO, AOD
+        return disparate_impact, stat_par_diff, EO, AOD, conf_matrix
 
     # calculate Disparate Impact (DI) metric and Discrimination Score (DS) metric
     num_instances_priv_false = X_test[X_test[sensitive_attr] == 0].shape[0]
@@ -82,4 +89,23 @@ def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.D
     EOdds = (fp_privileged_neg / np.sum((X_test[sensitive_attr] == 1) & (y_test[neg_idx] == 0)) -
              fp_unprivileged_neg / np.sum((X_test[sensitive_attr] == 0) & (y_test[neg_idx] == 0)))
 
-    return DI, DS, EO, EOdds
+    return DI, DS, EO, EOdds, conf_matrix
+
+
+def print_conf_matrix(conf_matrix):
+    total = conf_matrix.sum()
+    tp = conf_matrix[1, 1]
+    tn = conf_matrix[0, 0]
+    fp = conf_matrix[0, 1]
+    fn = conf_matrix[1, 0]
+
+    # # Print percentages with labels
+    print("\nConfusion Matrix: ")
+    print("Percentage of True positives =", (tp / total))
+    print("Percentage of True negatives =", (tn / total))
+    print("Percentage of False positives =", (fp / total))
+    print("Percentage of False negatives =", (fn / total))
+
+    print("FPR: ", fp / (fp + tn))
+    print("TPR: ", tp / (tp + fn))
+    print("PPP: ", tp / (tp + fp))
