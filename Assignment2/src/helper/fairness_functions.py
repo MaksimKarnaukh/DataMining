@@ -10,7 +10,8 @@ from IPython.display import display
 
 warnings.filterwarnings("ignore")
 
-def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred,
+
+def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred: np.ndarray,
                          sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[Any, Any, Any, Any, Any]:
     """
     Calculate the following metrics:
@@ -39,16 +40,15 @@ def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred,
     - A negative value indicates that the unprivileged group has more favorable outcomes compared to the privileged group.
     - A value of 0, both groups have equal benefit.
 
-    :param X_train: training dataset
-    :param y_train: training labels
-    :param X_test: test dataset
-    :param y_test: test labels
+    :param X_test: the test set features
+    :param y_test: the test set target
+    :param y_pred: the predicted target
     :param sensitive_attr: the name of the single sensitive attribute in the dataset
     :param use_lib_implementation: whether to use the aif360 library implementation for the disparate impact ratio and statistical parity difference calculation.
     If True, the last element in the returning tuple will be the Average Odds Difference (AOD) instead of Equalized odds.
     As far as I have checked, corresponding to the theory, the aif360 library implementation of Equal Opportunity
     is incorrect in the sense that it switches the privileged and unprivileged groups in the difference formula.
-    :return: disparate impact, discrimination score, equal opportunity, equalized odds
+    :return: disparate impact, discrimination score, equal opportunity, equalized odds, conf_matrix
     """
 
     conf_matrix = confusion_matrix(y_test, y_pred)
@@ -199,3 +199,46 @@ def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: flo
     composite_metric = accuracy_weight * accuracy + fairness_weight * (1 - fairness_metric)
 
     return composite_metric
+
+
+def get_male_female_data(data: pd.DataFrame, is_encoded: bool):
+    if is_encoded:
+        male_data = data[data['sex_Male'] == 1]
+        female_data = data[data['sex_Male'] == 0]
+    else:
+        male_data = data[data['sex'] == 'Male']
+        female_data = data[data['sex'] == 'Female']
+
+    return male_data, female_data
+
+
+def get_male_female_test_data(X_male, X_female, X_test_, y_test_):
+    """
+    Get test data for males and females.
+
+    Parameters:
+        X_male (pd.DataFrame): Dataframe containing male samples.
+        X_female (pd.DataFrame): Dataframe containing female samples.
+        X_test_ (pd.DataFrame): Test features dataframe.
+        y_test_ (pd.Series): Test target series.
+
+    Returns:
+        Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
+            Test data for males (features, target) and females (features, target).
+    """
+    # Get the indices of male and female samples in the original dataset
+    male_indices = X_male.index
+    female_indices = X_female.index
+
+    # Get the indices of male and female samples in the test set
+    male_indices_test = X_test_.index.intersection(male_indices)
+    female_indices_test = X_test_.index.intersection(female_indices)
+
+    # Get the test data for males and females
+    X_male_test = X_test_.loc[male_indices_test]
+    y_male_test = y_test_.loc[male_indices_test]
+
+    X_female_test = X_test_.loc[female_indices_test]
+    y_female_test = y_test_.loc[female_indices_test]
+
+    return X_male_test, y_male_test, X_female_test, y_female_test
