@@ -1,19 +1,17 @@
 import warnings
-warnings.filterwarnings("ignore")
-
 import numpy as np
 import pandas as pd
 from typing import Tuple, Any
 
-from sklearn.neighbors import KNeighborsClassifier
 from aif360.sklearn.metrics import disparate_impact_ratio, statistical_parity_difference, equal_opportunity_difference, \
     average_odds_difference
 from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, accuracy_score
 from IPython.display import display
 
+warnings.filterwarnings("ignore")
 
-def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
-                       sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[Any, Any, Any, Any, Any]:
+def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred,
+                         sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[Any, Any, Any, Any, Any]:
     """
     Calculate the following metrics:
     -Disparate Impact (DI) metric => DI = P(Yˆ = +|Z = 0) / P(Yˆ = +|Z = 1)
@@ -53,10 +51,6 @@ def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.D
     :return: disparate impact, discrimination score, equal opportunity, equalized odds
     """
 
-    knn_model = KNeighborsClassifier(n_neighbors=5)
-    knn_model.fit(X_train, y_train)
-    y_pred = knn_model.predict(X_test)
-
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     if use_lib_implementation:
@@ -80,7 +74,8 @@ def statistical_measures(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.D
     neg_idx = y_test == 0
 
     tp_privileged_pos = np.sum((y_test[pos_idx] == 1) & (y_pred[pos_idx] == 1) & (X_test[sensitive_attr][pos_idx] == 1))
-    tp_unprivileged_pos = np.sum((y_test[pos_idx] == 1) & (y_pred[pos_idx] == 1) & (X_test[sensitive_attr][pos_idx] == 0))
+    tp_unprivileged_pos = np.sum(
+        (y_test[pos_idx] == 1) & (y_pred[pos_idx] == 1) & (X_test[sensitive_attr][pos_idx] == 0))
     fp_privileged_neg = np.sum((y_test[neg_idx] == 0) & (y_pred[neg_idx] == 1) & (X_test[sensitive_attr][neg_idx] == 1))
     fp_unprivileged_neg = np.sum(
         (y_test[neg_idx] == 0) & (y_pred[neg_idx] == 1) & (X_test[sensitive_attr][neg_idx] == 0))
@@ -141,28 +136,25 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Tuple[float, float, f
     return accuracy, precision, recall, f1
 
 
-def split_male_female_metrics(model, X_train, X_test, y_train, y_test, print_metrics: bool = False):
-    X_male_train = X_train[X_train['sex_Male'] == 1]
-    X_male_test = X_test[X_test['sex_Male'] == 1]
-    y_male_train = y_train[X_train['sex_Male'] == 1]
-    y_male_test = y_test[X_test['sex_Male'] == 1]
+def split_male_female_metrics(model, X_test, y_test, print_metrics: bool = False, split_testsets: list = None):
+    if split_testsets is None:
+        X_male_test = X_test[X_test['sex_Male'] == 1]
+        y_male_test = y_test[X_test['sex_Male'] == 1]
+        X_female_test = X_test[X_test['sex_Male'] == 0]
+        y_female_test = y_test[X_test['sex_Male'] == 0]
+    else:
+        X_male_test = split_testsets[0]
+        y_male_test = split_testsets[1]
+        X_female_test = split_testsets[2]
+        y_female_test = split_testsets[3]
 
     y_male_pred = model.predict(X_male_test)
-
-    male_accuracy, male_precision, male_recall, male_f1 = get_metrics(y_male_test, y_male_pred)
-
-    X_female_train = X_train[X_train['sex_Male'] == 0]
-    X_female_test = X_test[X_test['sex_Male'] == 0]
-    y_female_train = y_train[X_train['sex_Male'] == 0]
-    y_female_test = y_test[X_test['sex_Male'] == 0]
-
     y_female_pred = model.predict(X_female_test)
 
+    male_accuracy, male_precision, male_recall, male_f1 = get_metrics(y_male_test, y_male_pred)
     female_accuracy, female_precision, female_recall, female_f1 = get_metrics(y_female_test, y_female_pred)
 
-    # calculate male conf matrix
     conf_matrix_male = confusion_matrix(y_male_test, y_male_pred)
-    # calculate male conf matrix
     conf_matrix_female = confusion_matrix(y_female_test, y_female_pred)
 
     fpr_male, tpr_male, ppp_male = calc_fairness_metrics(conf_matrix_male)
@@ -187,7 +179,8 @@ def split_male_female_metrics(model, X_train, X_test, y_train, y_test, print_met
     return fpr_male, fpr_female, tpr_male, tpr_female
 
 
-def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: float, tpr_male: float, tpr_female: float, accuracy_weight: float = 0.7, fairness_weight: float = 0.3):
+def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: float, tpr_male: float, tpr_female: float,
+                               accuracy_weight: float = 0.7, fairness_weight: float = 0.3):
     """
     Calculate the composite metric that balances accuracy and fairness.
     :param accuracy: Accuracy of the model.
@@ -203,6 +196,6 @@ def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: flo
     fairness_metric = abs(fpr_male - fpr_female)
 
     # Calculate composite metric as a weighted sum of accuracy and fairness metrics
-    composite_metric = (accuracy_weight * accuracy) + (fairness_weight * (1 - fairness_metric))
+    composite_metric = accuracy_weight * accuracy + fairness_weight * (1 - fairness_metric)
 
     return composite_metric

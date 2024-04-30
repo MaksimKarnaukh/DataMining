@@ -93,7 +93,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
             accuracy = accuracy_score(y_test, y_pred)
 
             # Calculate fairness metrics (e.g., FPR, TPR) here
-            fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_train, X_test, y_train, y_test)
+            fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, y_train, y_test)
 
             # Calculate composite metric
             composite_metric = calculate_composite_metric(accuracy, fpr_male, fpr_female, tpr_male, tpr_female)
