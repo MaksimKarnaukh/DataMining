@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore")
 
 
 def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred: np.ndarray,
-                         sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[Any, Any, Any, Any, Any]:
+                         sensitive_attr: str, use_lib_implementation: bool = False) -> Tuple[float, float, float, float, Any]:
     """
     Calculate the following metrics:
     -Disparate Impact (DI) metric => DI = P(Yˆ = +|Z = 0) / P(Yˆ = +|Z = 1)
@@ -88,15 +88,12 @@ def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred: np.nda
     return DI, DS, EO, EOdds, conf_matrix
 
 
-def print_statistical_measures(DI, DS, EO, EOdds):
-
-    print(f"Disparate Impact (DI): {DI:.3f}")
-    print(f"Discrimination Score (DS): {DS:.3f}")
-    print(f"Equal Opportunity Difference (EO): {EO:.3f}")
-    print(f"Equalized Odds (EOdds): {EOdds:.3f}")
-
-
-def calc_fairness_metrics(conf_matrix):
+def calc_fairness_metrics(conf_matrix: any) -> Tuple[float, float, float]:
+    """
+    Calculate the fairness metrics False Positive Rate (FPR), True Positive Rate (TPR), and Positive Predictive Parity (PPP).
+    :param conf_matrix: the confusion matrix, in our case, it is (needs to be) a 2x2 matrix
+    :return: FPR, TPR, PPP
+    """
     tp = conf_matrix[1, 1]
     tn = conf_matrix[0, 0]
     fp = conf_matrix[0, 1]
@@ -109,26 +106,13 @@ def calc_fairness_metrics(conf_matrix):
     return fpr, tpr, ppp
 
 
-def print_conf_matrix(conf_matrix):
-    total = conf_matrix.sum()
-    tp = conf_matrix[1, 1]
-    tn = conf_matrix[0, 0]
-    fp = conf_matrix[0, 1]
-    fn = conf_matrix[1, 0]
-
-    # # Print percentages with labels
-    print("\nConfusion Matrix: ")
-    print("Percentage of True positives =", (tp / total))
-    print("Percentage of True negatives =", (tn / total))
-    print("Percentage of False positives =", (fp / total))
-    print("Percentage of False negatives =", (fn / total))
-
-    print("FPR: ", fp / (fp + tn))
-    print("TPR: ", tp / (tp + fn))
-    print("PPP: ", tp / (tp + fp))
-
-
 def get_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Tuple[float, float, float, float]:
+    """
+    Calculate the accuracy, precision, recall, and F1-score metrics.
+    :param y_true: ground truth target values
+    :param y_pred: predicted target values
+    :return: accuracy, precision, recall, F1-score
+    """
     accuracy = accuracy_score(y_true, y_pred)
     precision = precision_score(y_true, y_pred)
     recall = recall_score(y_true, y_pred)
@@ -137,7 +121,18 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Tuple[float, float, f
     return accuracy, precision, recall, f1
 
 
-def split_male_female_metrics(model, X_test, y_test, print_metrics: bool = False, split_testsets: list = None):
+def split_male_female_metrics(model: any, X_test: pd.DataFrame, y_test: pd.Series, print_metrics: bool = False, split_testsets: list = None) -> Tuple[float, float, float, float]:
+    """
+    Get the fairness metrics FPR and TPR for males and females.
+    :param model: the trained model
+    :param X_test: the test set features
+    :param y_test: the test set target
+    :param print_metrics: set to True to print the confusion matrices and the metrics table for both sexes
+    :param split_testsets: if not None, it should be a list containing the male/female split test sets.
+    The list should be in the following form: [X_male_test, y_male_test, X_female_test, y_female_test].
+    :return: fpr_male, fpr_female, tpr_male, tpr_female
+    """
+
     if split_testsets is None:
         X_male_test = X_test[X_test['sex_Male'] == 1]
         y_male_test = y_test[X_test['sex_Male'] == 1]
@@ -162,9 +157,9 @@ def split_male_female_metrics(model, X_test, y_test, print_metrics: bool = False
     fpr_female, tpr_female, ppp_female = calc_fairness_metrics(conf_matrix_female)
 
     if print_metrics:
-        print("\nConfusion Matrix for Male group")
+        print("\nConfusion Matrix for Male group:")
         print_conf_matrix(conf_matrix_male)
-        print("\nConfusion Matrix for Female group")
+        print("\nConfusion Matrix for Female group:")
         print_conf_matrix(conf_matrix_female)
 
         # Compare the model's accuracy for male and female groups
@@ -180,7 +175,17 @@ def split_male_female_metrics(model, X_test, y_test, print_metrics: bool = False
     return fpr_male, fpr_female, tpr_male, tpr_female
 
 
-def print_male_female_metrics(model, X_, X_male, X_female, X_test_, y_test_):
+def print_male_female_metrics(model: any, X_: pd.DataFrame, X_male: pd.DataFrame, X_female: pd.DataFrame, X_test_: pd.DataFrame, y_test_: pd.Series) -> None:
+    """
+    Print the fairness metrics FPR and TPR for males and females, together with the statistical measures.
+    :param model: the trained model
+    :param X_: the original dataset without the target
+    :param X_male: the original dataset without the target, only males
+    :param X_female: the original dataset without the target, only females
+    :param X_test_: the test set features
+    :param y_test_: the test set target
+    :return:
+    """
 
     X_male_test, y_male_test, X_female_test, y_female_test = get_male_female_test_data(X_male, X_female, X_test_,
                                                                                        y_test_)
@@ -209,7 +214,7 @@ def print_male_female_metrics(model, X_, X_male, X_female, X_test_, y_test_):
 
 
 def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: float, tpr_male: float, tpr_female: float,
-                               accuracy_weight: float = 0.7, fairness_weight: float = 0.3):
+                               accuracy_weight: float = 0.5, fairness_weight: float = 0.5):
     """
     Calculate the composite metric that balances accuracy and fairness.
     :param accuracy: Accuracy of the model.
@@ -230,30 +235,31 @@ def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: flo
     return composite_metric
 
 
-def get_male_female_data(data: pd.DataFrame, is_encoded: bool):
+def get_male_female_data(data: pd.DataFrame, is_encoded: bool) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Split the data into male-only data and female-only data.
+    :param data: original dataset
+    :param is_encoded: set to True if the dataset is already encoded (meaning 'sex' is already one-hot encoded)
+    :return: male_data, female_data
+    """
     if is_encoded:
         male_data = data[data['sex_Male'] == 1]
         female_data = data[data['sex_Male'] == 0]
+        return male_data, female_data
     else:
         male_data = data[data['sex'] == 'Male']
         female_data = data[data['sex'] == 'Female']
+        return male_data, female_data
 
-    return male_data, female_data
 
-
-def get_male_female_test_data(X_male, X_female, X_test_, y_test_):
+def get_male_female_test_data(X_male, X_female, X_test_, y_test_) -> Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
     """
-    Get test data for males and females.
-
-    Parameters:
-        X_male (pd.DataFrame): Dataframe containing male samples.
-        X_female (pd.DataFrame): Dataframe containing female samples.
-        X_test_ (pd.DataFrame): Test features dataframe.
-        y_test_ (pd.Series): Test target series.
-
-    Returns:
-        Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
-            Test data for males (features, target) and females (features, target).
+    Get test data for males and females. Returns Test data for males (features, target) and females (features, target).
+    :param X_male: Dataframe containing male samples.
+    :param X_female: Dataframe containing female samples.
+    :param X_test_: Test features dataframe.
+    :param y_test_: Test target series.
+    :return: X_male_test, y_male_test, X_female_test, y_female_test
     """
     # Get the indices of male and female samples in the original dataset
     male_indices = X_male.index
@@ -271,3 +277,41 @@ def get_male_female_test_data(X_male, X_female, X_test_, y_test_):
     y_female_test = y_test_.loc[female_indices_test]
 
     return X_male_test, y_male_test, X_female_test, y_female_test
+
+
+def print_statistical_measures(DI, DS, EO, EOdds) -> None:
+    """
+    Print the fairness metrics.
+    :param DI: Disparate Impact (DI) metric
+    :param DS: Discrimination Score (DS) metric
+    :param EO: Equal Opportunity (EO) metric
+    :param EOdds: Equalized Odds (EOdds) metric
+    :return:
+    """
+    print(f"Disparate Impact (DI): {DI:.3f}")
+    print(f"Discrimination Score (DS): {DS:.3f}")
+    print(f"Equal Opportunity Difference (EO): {EO:.3f}")
+    print(f"Equalized Odds (EOdds): {EOdds:.3f}")
+
+
+def print_conf_matrix(conf_matrix):
+    """
+    Print the FPR, TPR and PPP fairness metrics and the percentages of True Positives, True Negatives, False Positives, and False Negatives.
+    :param conf_matrix: the confusion matrix, in our case, it is (needs to be) a 2x2 matrix
+    :return:
+    """
+    total = conf_matrix.sum()
+    tp = conf_matrix[1, 1]
+    tn = conf_matrix[0, 0]
+    fp = conf_matrix[0, 1]
+    fn = conf_matrix[1, 0]
+
+    print("\nConfusion Matrix: ")
+    print("Percentage of True positives =", (tp / total))
+    print("Percentage of True negatives =", (tn / total))
+    print("Percentage of False positives =", (fp / total))
+    print("Percentage of False negatives =", (fn / total))
+
+    print("FPR: ", fp / (fp + tn))
+    print("TPR: ", tp / (tp + fn))
+    print("PPP: ", tp / (tp + fp))

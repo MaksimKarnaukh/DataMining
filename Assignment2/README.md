@@ -1,14 +1,50 @@
 # Data Mining
 
-### Assignment 2: ...
+### Assignment 2: Classification
 
 #### Project Structure for Assignment 2
 ```
-
+Assignment2/
+│
+├── data/ (folder with the raw and cleaned dataset + test set without labels)
+│   ├── assignment2_income_levels.xlsx
+│   ├── assignment2_income_levels_cleaned.csv
+│   └── assignment2_test.csv
+│
+├── output/ (folder with the saved models and predictions)
+│   ├── saved_models/ 
+│   └── pred/ 
+│       
+├── plots/
+│   └── feat_importance_by_rules/ (folder with the heatmaps for 'income' association rules)
+│       ├── high/ (folder with the plots for 'high' income consequent)
+│       └── low/ (folder with the plots for 'low' income consequent)
+│       
+├── src/
+│   ├── helper/ (folder with general helper stuff)
+│   │   ├── clfmodel_functions.py (file with functions related to classification models)
+│   │   ├── data_preprocessing.ipynb
+│   │   ├── fairness_functions.py (file with functions related to fairness)
+│   │   └── helper_functions.py (file with general helper functions)
+│   │
+│   ├── fairness.ipynb (some fairness experiments)
+│   ├── feature_importance.ipynb (feature engineering and importance)
+│   ├── model_decision_tree.ipynb
+│   ├── model_knn.ipynb
+│   ├── model_logistic_regression.ipynb
+│   ├── model_naive_bayes.ipynb
+│   └── model_random_forest.ipynb
+│
+├── Data Mining Assignment - Classification.pdf
+├── README.md
+└── requirements.txt
 ```
 
 The notebooks are commented and structured in a way that the code is easy to follow. 
 The requirements.txt file contains the libraries used in the notebooks.
+
+This project explores the use of five different classification models to predict the income level of individuals based on a set of features.
+In the files starting with `model_`, the models are trained and evaluated.
 
 #### Sources and References
 

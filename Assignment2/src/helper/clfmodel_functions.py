@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import make_scorer, accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.feature_selection import SequentialFeatureSelector
@@ -16,12 +15,12 @@ def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, di
     """
     Perform sequential feature selection using SequentialFeatureSelector from sklearn.
     https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html#:~:text=This%20Sequential%20Feature%20Selector%20adds,validation%20score%20of%20an%20estimator.
-    :param model:
-    :param X_train:
-    :param y_train:
-    :param direction:
-    :param scoring:
-    :param sfs_tol:
+    :param model: Classifier model
+    :param X_train: features dataset, with features encoded
+    :param y_train: target dataset, with target encoded
+    :param direction: Direction of feature selection. Can be "forward" or "backward".
+    :param scoring: Scoring metric to use for feature selection.
+    :param sfs_tol: Tolerance for the stopping criterion.
     :return:
     """
     sfs: SequentialFeatureSelector = SequentialFeatureSelector(model,
@@ -41,19 +40,21 @@ def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, di
 
 
 def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
-               param_grid: dict, top_n: int = 10, cv: int = 5, ensure_fairness: bool = False) -> Tuple[dict, any, float]:
+               param_grid: dict, top_n: int = 10, cv: int = 5, ensure_fairness: bool = False) -> Tuple[
+    dict, any, float]:
     """
-    Tune the hyperparameters of the K-Nearest Neighbors model using GridSearchCV.
+    Tune the hyperparameters of a model using GridSearchCV.
     https://medium.com/@agrawalsam1997/hyperparameter-tuning-of-knn-classifier-a32f31af25c7
     https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
-    :param model:
-    :param X_train:
-    :param y_train:
-    :param X_test:
-    :param y_test:
-    :param param_grid:
-    :param top_n: Number of top-performing models to return.
-    :param cv: Number of folds for cross-validation.
+    :param model: Classifier model
+    :param X_train: features dataset, with features encoded
+    :param y_train: target dataset, with target encoded
+    :param X_test: test features dataset, with features encoded
+    :param y_test: test target dataset, with target encoded
+    :param param_grid: Dictionary of hyperparameters to tune
+    :param top_n: Number of top-performing models from which to select the best model based on test set accuracy (or composite metric). Default is 10.
+    :param cv: Number of folds for cross-validation. Default is 5.
+    :param ensure_fairness: Whether to ensure fairness in the model. Default is False.
     :return:
     """
     # Perform grid search with 5-fold cross-validation
@@ -92,8 +93,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
             y_pred = model.predict(X_test)
             accuracy = accuracy_score(y_test, y_pred)
 
-            # Calculate fairness metrics (e.g., FPR, TPR) here
-            fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, y_train, y_test)
+            fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_test, y_test)
 
             # Calculate composite metric
             composite_metric = calculate_composite_metric(accuracy, fpr_male, fpr_female, tpr_male, tpr_female)
@@ -108,15 +108,19 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
         return best_params, best_model, best_accuracy
 
 
-def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val, epsilon: float = 1e-3, ensure_fairness: bool = False) -> Tuple[List[str], dict, float]:
+def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series,
+                                       X_val: pd.DataFrame, y_val: pd.Series, epsilon: float = 1e-3,
+                                       ensure_fairness: bool = False) -> Tuple[List[str], dict, float]:
     """
-    Forward feature selection with hyperparameter tuning for K-Nearest Neighbors.
+    Forward feature selection with hyperparameter tuning for model.
     :param model: Classifier model
+    :param param_grid: Dictionary of hyperparameters to tune
     :param X_train: features dataset, with features encoded
     :param y_train: target dataset, with target encoded
     :param X_val: validation features dataset, with features encoded
     :param y_val: validation target dataset, with target encoded
     :param epsilon: threshold for improvement in accuracy
+    :param ensure_fairness: Whether to ensure fairness in the model. Default is False.
     :return: (best subset of features, best hyperparameters, best model accuracy)
     """
     best_subset: List[str] = []
@@ -125,10 +129,10 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
 
     columns_to_exclude = []
 
-    remaining_features = [list(set(['age']) - set(columns_to_exclude)),
-                          list(set(['education']) - set(columns_to_exclude)),
-                          list(set(['workinghours']) - set(columns_to_exclude)),
-                          list(set(['ability to speak english']) - set(columns_to_exclude)),
+    remaining_features = [list({'age'} - set(columns_to_exclude)),
+                          list({'education'} - set(columns_to_exclude)),
+                          list({'workinghours'} - set(columns_to_exclude)),
+                          list({'ability to speak english'} - set(columns_to_exclude)),
                           [col for col in X_train.columns if col.startswith('workclass')],
                           [col for col in X_train.columns if col.startswith('marital status')],
                           [col for col in X_train.columns if col.startswith('occupation')],
@@ -144,6 +148,7 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
 
         for feature_cat in remaining_features:
             if len(feature_cat) == 0:
+                # normally, we should never enter this block
                 print("Empty feature category")
                 continue
 
@@ -153,7 +158,8 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
             X_subset: pd.DataFrame = X_train[current_subset]
             X_val_subset: pd.DataFrame = X_val[current_subset]
 
-            best_params, best_model, score = tune_model(model, X_subset, y_train, X_val_subset, y_val, param_grid, ensure_fairness=ensure_fairness)
+            best_params, best_model, score = tune_model(model, X_subset, y_train, X_val_subset, y_val, param_grid,
+                                                        ensure_fairness=ensure_fairness)
 
             subset_scores.append(score)
             subset_params.append(best_params)
@@ -191,12 +197,12 @@ def multi_metric_cv(model: any, scoring: dict, X_train: pd.DataFrame, y_train: p
                     refit: str = "Accuracy") -> dict:
     """
     Perform GridSearchCV with multiple scorers for a given model.
-    :param model:
-    :param scoring:
-    :param X_train:
-    :param y_train:
-    :param param_grid:
-    :param refit:
+    :param model: Classifier model
+    :param scoring: Dictionary of scoring metrics
+    :param X_train: features dataset, with features encoded
+    :param y_train: target dataset, with target encoded
+    :param param_grid: Dictionary of hyperparameters to tune
+    :param refit: Scoring metric to use for refitting the model. Default is "Accuracy".
     :return: results (dict)
     """
     gs: GridSearchCV = GridSearchCV(
@@ -217,15 +223,15 @@ def plot_multi_score_cv_results(x_label: str, x_min_val: float, x_max_val: float
                                 scoring: dict) -> None:
     """
     Plot the results of GridSearchCV with multiple scorers.
-    :param x_label:
-    :param x_min_val:
-    :param x_max_val:
-    :param y_min_val:
-    :param y_max_val:
-    :param results:
-    :param param_name:
-    :param param_type:
-    :param scoring:
+    :param x_label: Label for the x-axis
+    :param x_min_val: Minimum value for the x-axis
+    :param x_max_val: Maximum value for the x-axis
+    :param y_min_val: Minimum value for the y-axis
+    :param y_max_val: Maximum value for the y-axis
+    :param results: Dictionary of results from GridSearchCV
+    :param param_name: Name of the parameter to plot
+    :param param_type: Type of the parameter to plot
+    :param scoring: Dictionary of scoring metrics
     :return:
     """
     plt.figure(figsize=(10, 10))

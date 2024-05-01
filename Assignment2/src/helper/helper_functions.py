@@ -103,7 +103,7 @@ def encode_all_features(X: pd.DataFrame, y: pd.Series | pd.DataFrame, columns_to
     :param X: features dataset
     :param y: target dataset
     :param columns_to_exclude: features to exclude from encoding
-    :return: encoded X and y datasets
+    :return: X_encoded, y_encoded
     """
     X_encoded: pd.DataFrame = X.copy()
 
@@ -122,9 +122,15 @@ def encode_all_features(X: pd.DataFrame, y: pd.Series | pd.DataFrame, columns_to
 
 def get_train_test_with_excluded_columns(data: pd.DataFrame, columns_to_exclude: List[str]) -> Tuple[
     pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, pd.DataFrame, pd.DataFrame]:
+    """
+    Get train and test datasets with excluded columns.
+    :param data: the dataset
+    :param columns_to_exclude: columns to exclude
+    :return: X_train_, X_test_, y_train_, y_test_, X_male, X_female
+    """
 
     X_, y_ = get_features_and_target(data, 'income')
-    X_male, X_female = get_male_female_data(X_, False)
+    X_male, X_female = get_male_female_data(X_, False)  # Split the data into male and female data
     X_ = X_.drop(columns=columns_to_exclude)
     X_encoded_, y_encoded_ = encode_all_features(X_, y_, columns_to_exclude)
     X_train_, X_test_, y_train_, y_test_ = train_test_split(X_encoded_, y_encoded_, test_size=0.2, random_state=42)
