@@ -89,6 +89,7 @@ def statistical_measures(X_test: pd.DataFrame, y_test: pd.Series, y_pred: np.nda
 
 
 def print_statistical_measures(DI, DS, EO, EOdds):
+
     print(f"Disparate Impact (DI): {DI:.3f}")
     print(f"Discrimination Score (DS): {DS:.3f}")
     print(f"Equal Opportunity Difference (EO): {EO:.3f}")
@@ -177,6 +178,34 @@ def split_male_female_metrics(model, X_test, y_test, print_metrics: bool = False
         display(metrics_table)
 
     return fpr_male, fpr_female, tpr_male, tpr_female
+
+
+def print_male_female_metrics(model, X_, X_male, X_female, X_test_, y_test_):
+
+    X_male_test, y_male_test, X_female_test, y_female_test = get_male_female_test_data(X_male, X_female, X_test_,
+                                                                                       y_test_)
+    split_testsets = [X_male_test, y_male_test, X_female_test, y_female_test]
+
+    fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_test_, y_test_,
+                                                                           split_testsets=split_testsets)
+
+    y_pred = model.predict(X_test_)
+    X_test_with_sex = X_test_.copy()
+    if 'sex' not in X_test_with_sex.columns:
+        X_test_with_sex = X_test_.join(X_['sex'])
+        X_test_with_sex['sex'] = X_test_with_sex['sex'].map({'Female': 0, 'Male': 1})
+
+    DI, DS, EO, EOdds, conf_matrix = statistical_measures(X_test_with_sex, y_test_, y_pred, 'sex',
+                                                          use_lib_implementation=False)
+
+    print("Fairness Metrics:")
+    print("Male FPR:", fpr_male)
+    print("Male TPR:", tpr_male)
+    print("Female FPR:", fpr_female)
+    print("Female TPR:", tpr_female)
+    print("")
+
+    print_statistical_measures(DI, DS, EO, EOdds)
 
 
 def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: float, tpr_male: float, tpr_female: float,

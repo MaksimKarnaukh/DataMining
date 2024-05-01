@@ -5,6 +5,8 @@ from joblib import dump, load
 from pandas import DataFrame
 
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+from sklearn.model_selection import train_test_split
+from .fairness_functions import get_male_female_data
 
 
 def load_dataset(file_path: str) -> pd.DataFrame | None:
@@ -116,3 +118,14 @@ def encode_all_features(X: pd.DataFrame, y: pd.Series | pd.DataFrame, columns_to
     y_encoded: pd.Series | pd.DataFrame = y.map({'low': 0, 'high': 1})
 
     return X_encoded, y_encoded
+
+
+def get_train_test_with_excluded_columns(data: pd.DataFrame, columns_to_exclude: List[str]) -> Tuple[
+    pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, pd.DataFrame, pd.DataFrame]:
+
+    X_, y_ = get_features_and_target(data, 'income')
+    X_male, X_female = get_male_female_data(X_, False)
+    X_ = X_.drop(columns=columns_to_exclude)
+    X_encoded_, y_encoded_ = encode_all_features(X_, y_, columns_to_exclude)
+    X_train_, X_test_, y_train_, y_test_ = train_test_split(X_encoded_, y_encoded_, test_size=0.2, random_state=42)
+    return X_train_, X_test_, y_train_, y_test_, X_male, X_female

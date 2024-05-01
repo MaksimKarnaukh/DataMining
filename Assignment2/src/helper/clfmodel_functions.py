@@ -105,7 +105,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
                 best_accuracy = accuracy
                 best_composite_metric = composite_metric
 
-        return best_params, best_model, best_composite_metric
+        return best_params, best_model, best_accuracy
 
 
 def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series, X_val, y_val, epsilon: float = 1e-3, ensure_fairness: bool = False) -> Tuple[List[str], dict, float]:
