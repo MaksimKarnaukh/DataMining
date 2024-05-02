@@ -110,7 +110,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
 
 def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series,
                                        X_val: pd.DataFrame, y_val: pd.Series, epsilon: float = 1e-3,
-                                       ensure_fairness: bool = False) -> Tuple[List[str], dict, float]:
+                                       ensure_fairness: bool = False, columns_to_exclude: list = None) -> Tuple[List[str], dict, float]:
     """
     Forward feature selection with hyperparameter tuning for model.
     :param model: Classifier model
@@ -121,13 +121,15 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
     :param y_val: validation target dataset, with target encoded
     :param epsilon: threshold for improvement in accuracy
     :param ensure_fairness: Whether to ensure fairness in the model. Default is False.
+    :param columns_to_exclude: columns to exclude from feature selection
     :return: (best subset of features, best hyperparameters, best model accuracy)
     """
     best_subset: List[str] = []
     best_params: dict = None
     best_score: float = 0.0
 
-    columns_to_exclude = []
+    if columns_to_exclude is None:
+        columns_to_exclude = []
 
     remaining_features = [list({'age'} - set(columns_to_exclude)),
                           list({'education'} - set(columns_to_exclude)),
@@ -138,6 +140,14 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
                           [col for col in X_train.columns if col.startswith('occupation')],
                           [col for col in X_train.columns if col.startswith('sex')],
                           [col for col in X_train.columns if col.startswith('gave birth this year')]]
+
+    if ensure_fairness:
+        if 'sex' in columns_to_exclude:
+            print("Cannot ensure fairness (use composite metric) without the 'sex' feature. Exiting.")
+            return best_subset, best_params, best_score
+        best_subset = [col for col in X_train.columns if col.startswith('sex')]
+        # remove the sex feature(s) from remaining_features
+        remaining_features.pop(7)
 
     # remove all empty lists from remaining_features
     remaining_features = [feature_cat for feature_cat in remaining_features if len(feature_cat) > 0]
