@@ -2,19 +2,19 @@ Number of results: 15
 Number of real results: 13
 Number of total rules: 20
 
-Items: (0, No)
+Items: (No, 0)
 	0 => No (support: 0.94155, confidence: 0.98569, lift: 0.99991)
 	No => 0 (support: 0.94155, confidence: 0.95513, lift: 0.99991)
 
-Items: (private, No)
+Items: (No, private)
 	private => No (support: 0.72744, confidence: 0.98540, lift: 0.99961)
 
-Items: (private, 0)
+Items: (0, private)
 	private => 0 (support: 0.70366, confidence: 0.95319, lift: 0.99787)
 
-Items: (private, 0, No)
-	private, 0 => No (support: 0.69333, confidence: 0.98531, lift: 0.99953)
-	private, No => 0 (support: 0.69333, confidence: 0.95310, lift: 0.99778)
+Items: (No, 0, private)
+	0, private => No (support: 0.69333, confidence: 0.98531, lift: 0.99953)
+	No, private => 0 (support: 0.69333, confidence: 0.95310, lift: 0.99778)
 
 Items: (Intermediate, No)
 	Intermediate => No (support: 0.66688, confidence: 0.98652, lift: 1.00075)
@@ -25,26 +25,26 @@ Items: (No, Male)
 Items: (Intermediate, 0)
 	Intermediate => 0 (support: 0.65411, confidence: 0.96761, lift: 1.01297)
 
-Items: (low, No)
+Items: (No, low)
 	low => No (support: 0.64611, confidence: 0.98209, lift: 0.99626)
 
-Items: (Intermediate, 0, No)
-	Intermediate => 0, No (support: 0.64533, confidence: 0.95463, lift: 1.01389)
+Items: (Intermediate, No, 0)
+	Intermediate => No, 0 (support: 0.64533, confidence: 0.95463, lift: 1.01389)
 	Intermediate, 0 => No (support: 0.64533, confidence: 0.98658, lift: 1.00081)
 	Intermediate, No => 0 (support: 0.64533, confidence: 0.96767, lift: 1.01303)
 
-Items: (0, Male)
+Items: (Male, 0)
 	Male => 0 (support: 0.634, confidence: 0.95100, lift: 0.99557)
 
-Items: (0, No, Male)
-	Male => 0, No (support: 0.634, confidence: 0.95100, lift: 1.01003)
-	0, Male => No (support: 0.634, confidence: 1.0, lift: 1.01442)
+Items: (No, Male, 0)
+	Male => No, 0 (support: 0.634, confidence: 0.95100, lift: 1.01003)
+	Male, 0 => No (support: 0.634, confidence: 1.0, lift: 1.01442)
 	No, Male => 0 (support: 0.634, confidence: 0.95100, lift: 0.99557)
 
-Items: (low, 0)
+Items: (0, low)
 	low => 0 (support: 0.62544, confidence: 0.95068, lift: 0.99524)
 
-Items: (low, 0, No)
-	low, 0 => No (support: 0.61411, confidence: 0.98187, lift: 0.99604)
-	low, No => 0 (support: 0.61411, confidence: 0.95047, lift: 0.99502)
+Items: (No, 0, low)
+	0, low => No (support: 0.61411, confidence: 0.98187, lift: 0.99604)
+	No, low => 0 (support: 0.61411, confidence: 0.95047, lift: 0.99502)
 

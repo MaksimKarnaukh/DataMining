@@ -48,8 +48,8 @@ def tune_model(model: any, X_encoded: pd.DataFrame, X_train: pd.DataFrame, y_tra
     https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
     :param model: Classifier model
     :param X_encoded: features dataset, with features encoded
-    :param X_train: features dataset, with features encoded
-    :param y_train: target dataset, with target encoded
+    :param X_train: features training dataset, with features encoded
+    :param y_train: target training dataset, with target encoded
     :param X_test: test features dataset, with features encoded
     :param y_test: test target dataset, with target encoded
     :param param_grid: Dictionary of hyperparameters to tune
@@ -118,15 +118,16 @@ def tune_model(model: any, X_encoded: pd.DataFrame, X_train: pd.DataFrame, y_tra
         return best_params, best_model, best_accuracy
 
 
-def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd.DataFrame, y_train: pd.Series,
+def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_encoded: pd.DataFrame, X_train: pd.DataFrame, y_train: pd.Series,
                                        X_val: pd.DataFrame, y_val: pd.Series, epsilon: float = 1e-3,
                                        ensure_fairness: bool = False, columns_to_exclude: list = None) -> Tuple[List[str], dict, float]:
     """
     Forward feature selection with hyperparameter tuning for model.
     :param model: Classifier model
     :param param_grid: Dictionary of hyperparameters to tune
-    :param X_train: features dataset, with features encoded
-    :param y_train: target dataset, with target encoded
+    :param X_encoded: features dataset, with features encoded
+    :param X_train: features training dataset, with features encoded
+    :param y_train: target training dataset, with target encoded
     :param X_val: validation features dataset, with features encoded
     :param y_val: validation target dataset, with target encoded
     :param epsilon: threshold for improvement in accuracy
@@ -152,9 +153,6 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
                           [col for col in X_train.columns if col.startswith('gave birth this year')]]
 
     if ensure_fairness:
-        if 'sex' in columns_to_exclude:
-            print("Cannot ensure fairness (use composite metric) without the 'sex' feature. Exiting.")
-            return best_subset, best_params, best_score
         best_subset = [col for col in X_train.columns if col.startswith('sex')]
         # remove the sex feature(s) from remaining_features
         remaining_features.pop(7)
@@ -178,7 +176,7 @@ def forward_feat_selection_hypertuning(model: any, param_grid: dict, X_train: pd
             X_subset: pd.DataFrame = X_train[current_subset]
             X_val_subset: pd.DataFrame = X_val[current_subset]
 
-            best_params, best_model, score = tune_model(model, X_subset, y_train, X_val_subset, y_val, param_grid,
+            best_params, best_model, score = tune_model(model, X_encoded, X_subset, y_train, X_val_subset, y_val, param_grid,
                                                         ensure_fairness=ensure_fairness)
 
             subset_scores.append(score)

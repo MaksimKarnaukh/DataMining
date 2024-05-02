@@ -222,12 +222,12 @@ def calculate_composite_metric(accuracy: float, fpr_male: float, fpr_female: flo
     :param fpr_female: False Positive Rate (FPR) for females.
     :param tpr_male: True Positive Rate (TPR) for males.
     :param tpr_female: True Positive Rate (TPR) for females.
-    :param accuracy_weight: Weight assigned to accuracy (default: 0.7).
-    :param fairness_weight: Weight assigned to fairness metrics (default: 0.3).
+    :param accuracy_weight: Weight assigned to accuracy.
+    :param fairness_weight: Weight assigned to fairness metrics.
     :return: Composite metric value.
     """
-    # Calculate fairness metric as the absolute difference between FPR for males and females
-    fairness_metric = abs(fpr_male - fpr_female)
+    # Calculate fairness metric
+    fairness_metric = (0.6*abs(fpr_male - fpr_female) + 0.4*abs(tpr_male - tpr_female)) / 2
 
     # Calculate composite metric as a weighted sum of accuracy and fairness metrics
     composite_metric = accuracy_weight * accuracy + fairness_weight * (1 - fairness_metric)
