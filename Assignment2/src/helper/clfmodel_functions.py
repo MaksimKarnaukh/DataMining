@@ -39,7 +39,7 @@ def seq_feat_selection(model: any, X_train: pd.DataFrame, y_train: pd.Series, di
         print(f"Feature {i + 1}: {feature}")
 
 
-def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
+def tune_model(model: any, X_encoded: pd.DataFrame, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series,
                param_grid: dict, top_n: int = 10, cv: int = 5, ensure_fairness: bool = False) -> Tuple[
     dict, any, float]:
     """
@@ -47,6 +47,7 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
     https://medium.com/@agrawalsam1997/hyperparameter-tuning-of-knn-classifier-a32f31af25c7
     https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
     :param model: Classifier model
+    :param X_encoded: features dataset, with features encoded
     :param X_train: features dataset, with features encoded
     :param y_train: target dataset, with target encoded
     :param X_test: test features dataset, with features encoded
@@ -93,7 +94,16 @@ def tune_model(model: any, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd
             y_pred = model.predict(X_test)
             accuracy = accuracy_score(y_test, y_pred)
 
-            fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_test, y_test)
+            fpr_male, fpr_female, tpr_male, tpr_female = None, None, None, None
+            if ensure_fairness:
+                X_male_test = X_test[X_encoded['sex_Male'] == 1]
+                y_male_test = y_test[X_encoded['sex_Male'] == 1]
+                X_female_test = X_test[X_encoded['sex_Male'] == 0]
+                y_female_test = y_test[X_encoded['sex_Male'] == 0]
+                split_testsets = [X_male_test, y_male_test, X_female_test, y_female_test]
+                fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_test, y_test, split_testsets=split_testsets)
+            else:
+                fpr_male, fpr_female, tpr_male, tpr_female = split_male_female_metrics(model, X_test, y_test)
 
             # Calculate composite metric
             composite_metric = calculate_composite_metric(accuracy, fpr_male, fpr_female, tpr_male, tpr_female)
