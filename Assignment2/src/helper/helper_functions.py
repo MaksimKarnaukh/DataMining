@@ -19,9 +19,9 @@ def load_dataset(file_path: str) -> pd.DataFrame | None:
     return dataset
 
 
-def save_dataset(dataset: pd.DataFrame, file_path: str):
+def save_dataset(dataset: pd.DataFrame, file_path: str, index=False):
     try:
-        dataset.to_excel(file_path, index=False)
+        dataset.to_excel(file_path, index=index)
     except Exception as e:
         print(e)
         print("Error: Unable to save dataset")
