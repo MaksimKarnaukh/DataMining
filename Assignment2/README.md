@@ -13,13 +13,15 @@ Assignment2/
 │
 ├── output/ (folder with the saved models and predictions)
 │   ├── saved_models/ 
-│   └── pred/ 
+│   └── test_predictions/ 
 │       
 ├── plots/
-│   └── feat_importance_by_rules/ (folder with the heatmaps for 'income' association rules)
-│       ├── high/ (folder with the plots for 'high' income consequent)
-│       └── low/ (folder with the plots for 'low' income consequent)
-│       
+│   ├── feat_importance_by_rules/ (folder with the heatmaps for 'income' association rules)
+│   │    ├── high/ (folder with the plots for 'high' income consequent)
+│   │    └── low/ (folder with the plots for 'low' income consequent)
+│   │ 
+│   └── other/ (folder with other plots)   
+│
 ├── src/
 │   ├── helper/ (folder with general helper stuff)
 │   │   ├── clfmodel_functions.py (file with functions related to classification models)
@@ -33,7 +35,8 @@ Assignment2/
 │   ├── model_knn.ipynb
 │   ├── model_logistic_regression.ipynb
 │   ├── model_naive_bayes.ipynb
-│   └── model_random_forest.ipynb
+│   ├── model_random_forest.ipynb
+│   └── test.ipynb (file for task 2, regarding the test set)
 │
 ├── Data Mining Assignment - Classification.pdf
 ├── README.md
@@ -45,6 +48,7 @@ The requirements.txt file contains the libraries used in the notebooks.
 
 This project explores the use of five different classification models to predict the income level of individuals based on a set of features.
 In the files starting with `model_`, the models are trained and evaluated.
+Each model file follows roughly the same structure (except Naive Bayes).
 
 #### Sources and References
 
