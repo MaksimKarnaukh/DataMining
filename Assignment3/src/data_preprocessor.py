@@ -60,7 +60,7 @@ class DataPreprocessor:
         tokens = self.remove_stop_words(tokens)
         # Remove numbers
         tokens = self.remove_numbers(tokens)
-        # Remove 'advertisement'
+        # Remove specific tokens, e.g. 'advertisement'
         tokens = [token for token in tokens if token.lower() != 'advertisement']
         # Stemming
         tokens = self.stem_tokens(tokens)
