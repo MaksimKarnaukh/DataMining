@@ -6,3 +6,5 @@ matplotlib
 seaborn
 nltk
 scikit-learn
+scikit-learn-extra
+setuptools

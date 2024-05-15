@@ -38,3 +38,6 @@ The requirements.txt file contains the libraries used in the notebooks.
 
 At the end of association_rules.ipynb, I experimented with the split male/female dataset, 
 but this wasn't as useful in the end, so it shouldn't be looked at.
+
+Please use a python 3.11 (or below) environment to run the code. 
+Python 3.12 doesn't work well with the sklearn_extra.cluster library (problem with distutils import in the library itself).
