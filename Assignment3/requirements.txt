@@ -5,3 +5,4 @@ openpyxl
 matplotlib
 seaborn
 nltk
+scikit-learn
