@@ -7,6 +7,18 @@ import nltk
 
 
 class DataPreprocessor:
+    """
+    Data preprocessor class that preprocesses text data.
+
+    Roughly copied from:
+    https://github.com/MaksimKarnaukh/IR_project/blob/main/src/data_preprocessor.py
+
+    Args:
+        language (str): Language of the stop words. Default is 'english'.
+    Attributes:
+        stop_words (set): Set of stop words.
+        stemmer (PorterStemmer): Stemmer object.
+    """
 
     def __init__(self, language='english'):
         self.check_nltk_data_downloaded()
