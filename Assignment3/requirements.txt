@@ -8,3 +8,4 @@ nltk
 scikit-learn
 scikit-learn-extra
 setuptools
+yellowbrick

@@ -55,7 +55,9 @@ class DataPreprocessor:
         """
         Remove numbers from the list of tokens.
         """
-        return [word for word in tokens if not word.isdigit()]
+        # return [word for word in tokens if not word.isdigit()]
+
+        return [word for word in tokens if not re.search(r'\d', word)]
 
     def preprocess_text(self, text):
         """
