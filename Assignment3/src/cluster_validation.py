@@ -27,11 +27,11 @@ def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrc
     if hasattr(data, "toarray") and not isinstance(data, np.ndarray):
         data = data.toarray()
 
-    # Compute the pairwise distances
+    # compute pairwise distances
     pairwise_distances: np.ndarray = pdist(data, metric=metric)  # One vector with all 'pairwise distances'
     distance_matrix: np.ndarray = squareform(pairwise_distances)  # Matrix with pairwise distances
 
-    # Creating the incidence matrix
+    # the incidence matrix is a matrix where the entry (i, j) is 1 if the points i and j are in the same cluster
     n_samples = data.shape[0]
     incidence_matrix = np.zeros((n_samples, n_samples))
     for i in range(n_samples):
@@ -46,7 +46,6 @@ def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrc
     flat_distances = distance_matrix[upper_triangle_indices]
     flat_incidence = incidence_matrix[upper_triangle_indices]
 
-    # Compute the correlation between distances and incidence
     if correlation_method == 'spearman':
         correlation, _ = spearmanr(flat_distances, flat_incidence)
     elif correlation_method == 'corrcoef': # gives different results than spearmanr
