@@ -15,12 +15,13 @@ from sklearn.metrics import pairwise_distances
 import matplotlib.pyplot as plt
 
 
-def cv_correlation(data, clusters, metric='euclidean') -> float:
+def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrcoef') -> float:
     """
     Calculate the correlation of incidence and proximity matrices for the clustering of the data.
     :param data: numpy representation of the dataframe
     :param clusters: cluster labels
     :param metric: distance metric
+    :param correlation_method: method to calculate the correlation ('spearman' or 'corrcoef')
     :return: correlation between pairwise distances and incidence of the same cluster
     """
     if hasattr(data, "toarray") and not isinstance(data, np.ndarray):
@@ -46,7 +47,13 @@ def cv_correlation(data, clusters, metric='euclidean') -> float:
     flat_incidence = incidence_matrix[upper_triangle_indices]
 
     # Compute the correlation between distances and incidence
-    correlation, _ = spearmanr(flat_distances, flat_incidence)
+    if correlation_method == 'spearman':
+        correlation, _ = spearmanr(flat_distances, flat_incidence)
+    elif correlation_method == 'corrcoef': # gives different results than spearmanr
+        correlation = np.corrcoef(flat_distances, flat_incidence)[0, 1]
+    else:
+        raise ValueError('Invalid correlation method. Please choose "spearman" or "corrcoef".')
+
     return correlation
 
 
@@ -144,19 +151,17 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     correlation_is_atypical: bool = correlation_z_score < -2  # we want a negative z-score for correlation, which then means it is below the mean
 
     print(f'---')
-    print(f'Actual SSE: {actual_sse:.3f}')
-    print(f'Random SSE: Mean: {sse_mean:.3f}, Std: {sse_std:.3f}')
-    print(f'SSE Z-Score: {sse_z_score:.3f}')
-    print(f'=> SSE is Atypical: {sse_is_atypical}')
+    print(f'Actual SSE: {actual_sse:.4f}')
+    print(f'Random SSE: Mean: {sse_mean:.4f}, Std: {sse_std:.4f}')
+    print(f'SSE Z-Score: {sse_z_score:.4f} => SSE is Atypical: {sse_is_atypical}')
     print(f'---')
-    print(f'Actual Silhouette Score: {actual_silhouette:.3f}')
-    print(f'Random Silhouette: Mean: {silhouette_mean:.3f}, Std: {silhouette_std:.3f}')
-    print(f'Silhouette Z-Score: {silhouette_z_score:.3f}')
-    print(f'=> Silhouette Score is Atypical: {silhouette_is_atypical}')
+    print(f'Actual Silhouette Score: {actual_silhouette:.4f}')
+    print(f'Random Silhouette: Mean: {silhouette_mean:.4f}, Std: {silhouette_std:.4f}')
+    print(f'Silhouette Z-Score: {silhouette_z_score:.4f} => Silhouette Score is Atypical: {silhouette_is_atypical}')
     print(f'---')
-    print(f'Actual Correlation: {actual_correlation:.3f}')
-    print(f'Random Correlation: Mean: {correlation_mean:.3f}, Std: {correlation_std:.3f}')
-    print(f'Correlation Z-Score: {correlation_z_score:.3f}')
-    print(f'=> Correlation is Atypical: {correlation_is_atypical}')
+    print(f'Actual Correlation: {actual_correlation:.4f}')
+    print(f'Random Correlation: Mean: {correlation_mean:.4f}, Std: {correlation_std:.4f}')
+    print(f'Correlation Z-Score: {correlation_z_score:.4f} => Correlation is Atypical: {correlation_is_atypical}')
+    print(f'---')
 
     return sse_z_score, silhouette_z_score, correlation_z_score, sse_is_atypical, silhouette_is_atypical, correlation_is_atypical
