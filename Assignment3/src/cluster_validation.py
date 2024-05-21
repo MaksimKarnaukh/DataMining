@@ -84,7 +84,7 @@ def cv_similarity_matrix(data, clusters, metric='euclidean') -> None:
 
 
 def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataFrame, n_clusters: int, metric='euclidean',
-               random_state=42, n_permutations=100) -> tuple[float, float, float, bool, bool, bool]:
+               random_state=42, n_permutations=100, verbose=False) -> tuple[float, float, float, bool, bool, bool]:
     """
     Perform cluster validity statistics by comparing the actual clustering results to random permutations.
 
@@ -112,6 +112,8 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     silhouette_random: list[float] = []
     correlation_random: list[float] = []
     for _ in range(n_permutations):
+        if verbose:
+            print(f'Permutation {_ + 1}/{n_permutations}')
         permuted_data: np.ndarray = np.apply_along_axis(np.random.permutation, 0, data)
         model_random = actual_model.__class__(
             **model_params)  # we call this model random because we will fit it with (randomly) permuted data

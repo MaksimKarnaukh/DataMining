@@ -9,6 +9,7 @@ from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from sklearn.neighbors import NearestNeighbors
+from yellowbrick.cluster import KElbowVisualizer
 
 
 def elbow_method_plot(model, tfidf_features, max_k, use_own_function=False, distance_metric='euclidean') -> None:
@@ -39,7 +40,8 @@ def elbow_method_plot(model, tfidf_features, max_k, use_own_function=False, dist
         plt.grid(True)
         plt.show()
     else:
-        model = model.__class__(random_state=42)
+        params = model.get_params()
+        model = model.__class__(**params)
         visualizer = KElbowVisualizer(model, k=(1, max_k + 1), distance_metric=distance_metric)
         visualizer.fit(tfidf_features)
         visualizer.show()
