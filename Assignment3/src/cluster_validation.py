@@ -15,7 +15,7 @@ from sklearn.metrics import pairwise_distances
 import matplotlib.pyplot as plt
 
 
-def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrcoef') -> float:
+def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrcoef', precomputed=False) -> float:
     """
     Calculate the correlation of incidence and proximity matrices for the clustering of the data.
     :param data: numpy representation of the dataframe
@@ -28,8 +28,11 @@ def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrc
         data = data.toarray()
 
     # compute pairwise distances
-    pairwise_distances: np.ndarray = pdist(data, metric=metric)  # One vector with all 'pairwise distances'
-    distance_matrix: np.ndarray = squareform(pairwise_distances)  # Matrix with pairwise distances
+    if not precomputed:
+        pairwise_distances: np.ndarray = pdist(data, metric=metric)  # One vector with all 'pairwise distances'
+        distance_matrix: np.ndarray = squareform(pairwise_distances)  # Matrix with pairwise distances
+    else:
+        distance_matrix = data
 
     # the incidence matrix is a matrix where the entry (i, j) is 1 if the points i and j are in the same cluster
     n_samples = data.shape[0]
@@ -56,7 +59,7 @@ def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrc
     return correlation
 
 
-def cv_similarity_matrix(data, clusters, metric='euclidean') -> None:
+def cv_similarity_matrix(data, clusters, metric='euclidean', precomputed=False) -> None:
     """
     Plot the similarity matrix ordered by cluster labels.
     :param data: numpy representation of the dataframe
@@ -64,7 +67,11 @@ def cv_similarity_matrix(data, clusters, metric='euclidean') -> None:
     :param metric: distance metric
     :return:
     """
-    similarity_matrix: np.ndarray = 1 - pairwise_distances(data, metric=metric)
+    if precomputed:
+        similarity_matrix = 1 - data
+    else:
+        similarity_matrix: np.ndarray = 1 - pairwise_distances(data, metric=metric)
+
     sorted_indices: np.ndarray = np.argsort(clusters)  # Order the matrix by cluster labels
     sorted_similarity_matrix: np.ndarray = similarity_matrix[sorted_indices, :][:, sorted_indices]
 
@@ -90,7 +97,7 @@ def cv_similarity_matrix(data, clusters, metric='euclidean') -> None:
 
 
 def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataFrame, n_clusters: int, metric='euclidean',
-               random_state=42, n_permutations=100, verbose=False) -> tuple[float, float, float, bool, bool, bool]:
+               random_state=42, n_permutations=100, verbose=False, precomputed=False) -> tuple[float, float, float, bool, bool, bool]:
     """
     Perform cluster validity statistics by comparing the actual clustering results to random permutations.
 
@@ -127,7 +134,7 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
         random_clusters: np.ndarray = model_random.fit_predict(permuted_data)
         sse_random.append(model_random.inertia_)
         silhouette_random.append(silhouette_score(permuted_data, random_clusters))
-        correlation_random.append(cv_correlation(permuted_data, random_clusters, metric=metric))
+        correlation_random.append(cv_correlation(permuted_data, random_clusters, metric=metric, precomputed=precomputed))
 
     sse_random: np.ndarray = np.array(sse_random)
     silhouette_random: np.ndarray = np.array(silhouette_random)
