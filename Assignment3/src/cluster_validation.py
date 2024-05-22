@@ -95,6 +95,7 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     Perform cluster validity statistics by comparing the actual clustering results to random permutations.
 
     Note: a score's atypicality will also be returned as False, if the score is greater than the mean while it should be less and vice versa.
+    In this function we use the variable name 'sse', but it is actually the inertia of the considered clustering model.
 
     :param actual_model: the actual clustering model fitted on the regular data
     :param actual_clusters: the actual cluster labels from the actual model
@@ -150,9 +151,9 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     correlation_is_atypical: bool = correlation_z_score < -2  # we want a negative z-score for correlation, which then means it is below the mean
 
     print(f'---')
-    print(f'Actual SSE: {actual_sse:.4f}')
-    print(f'Random SSE: Mean: {sse_mean:.4f}, Std: {sse_std:.4f}')
-    print(f'SSE Z-Score: {sse_z_score:.4f} => SSE is Atypical: {sse_is_atypical}')
+    print(f'Actual Inertia: {actual_sse:.4f}')
+    print(f'Random Inertia: Mean: {sse_mean:.4f}, Std: {sse_std:.4f}')
+    print(f'Inertia Z-Score: {sse_z_score:.4f} => Inertia is Atypical: {sse_is_atypical}')
     print(f'---')
     print(f'Actual Silhouette Score: {actual_silhouette:.4f}')
     print(f'Random Silhouette: Mean: {silhouette_mean:.4f}, Std: {silhouette_std:.4f}')

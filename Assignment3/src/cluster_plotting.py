@@ -175,7 +175,7 @@ def plot_clusters_3d_all(text_data, clusters, n_components=3, random_state=42) -
     plt.show()
 
 
-def plot_k_distance_graph(text_data: np.ndarray, k: int = 4) -> None:
+def plot_k_distance_graph(text_data: np.ndarray, k: int = 4, metric='minkowski') -> None:
     """
     Plot the k-distance graph for DBSCAN to help determine the optimal epsilon value (roughly look for the elbow on the right side of the graph).
 
@@ -187,7 +187,7 @@ def plot_k_distance_graph(text_data: np.ndarray, k: int = 4) -> None:
     if not isinstance(text_data, np.ndarray):
         text_data = text_data.toarray()
 
-    nbrs = NearestNeighbors(n_neighbors=k).fit(text_data)
+    nbrs = NearestNeighbors(n_neighbors=k, metric=metric).fit(text_data)
     distances, indices = nbrs.kneighbors(text_data)
 
     # sort the distances to the k-th nearest neighbor in ascending order
