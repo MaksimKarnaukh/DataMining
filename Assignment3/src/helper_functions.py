@@ -19,3 +19,16 @@ def save_dataset(dataset, file_path):
         print("Error: Unable to save dataset")
         return
     return
+
+
+# save cluster labels to file
+def save_cluster_labels(data, cluster_labels, filename):
+    """
+    Save the cluster labels to a file.
+    :param data: original data dataframe
+    :param cluster_labels: cluster labels
+    :param filename: output filename
+    :return:
+    """
+    data['cluster'] = cluster_labels
+    data.to_excel(filename, index=False)
