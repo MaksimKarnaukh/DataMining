@@ -59,6 +59,12 @@ class DataPreprocessor:
 
         return [word for word in tokens if not re.search(r'\d', word)]
 
+    def remove_one_char_tokens(self, tokens):
+        """
+        Remove tokens that are only one character long.
+        """
+        return [word for word in tokens if len(word) > 1]
+
     def preprocess_text(self, text):
         """
         Apply the entire data preprocessing pipeline to the input text.
@@ -78,6 +84,8 @@ class DataPreprocessor:
         tokens = [token for token in tokens if token.lower() != 'advertisement']
         # Stemming
         tokens = self.stem_tokens(tokens)
+        # Remove one character tokens
+        # tokens = self.remove_one_char_tokens(tokens)
         # Remove unicode characters
         tokens = self.remove_unicode(tokens)
 
