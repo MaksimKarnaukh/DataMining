@@ -1,8 +1,8 @@
 # Data Mining
 
-### Assignment 1: Association Rules
+### Assignment 3: Clustering
 
-#### Project Structure for Assignment 1
+#### Project Structure for Assignment 3
 ```
 Assignment1/
 │
@@ -22,7 +22,7 @@ Assignment1/
 │   ├── clustering_dbscan.ipynb (this file shouldn't be looked at too seriously)
 │   ├── clustering_kmeans.ipynb
 │   ├── clustering_kmedoids.ipynb
-│   ├── data_preprocessor.py
+│   ├── data_preprocessor.py (data preprocessor class and functions)
 │   └── helper_functions.py
 │
 ├── Data Mining Assignment - Clustering.pdf
