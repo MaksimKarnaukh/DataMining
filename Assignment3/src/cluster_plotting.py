@@ -39,7 +39,7 @@ def elbow_method_plot(model, tfidf_features, max_k, use_own_function=False, dist
         plt.xticks(range(1, max_k + 1))
         plt.grid(True)
         plt.show()
-    else:
+    else: # use Yellowbrick implementation
         params = model.get_params()
         model = model.__class__(**params)
         visualizer = KElbowVisualizer(model, k=(1, max_k + 1), distance_metric=distance_metric)

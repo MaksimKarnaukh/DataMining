@@ -11,7 +11,7 @@ class DataPreprocessor:
     Data preprocessor class that preprocesses text data.
 
     Roughly copied from:
-    https://github.com/MaksimKarnaukh/IR_project/blob/main/src/data_preprocessor.py
+    https://github.com/MaksimKarnaukh/IR_project/blob/main/src/data_preprocessor.py (I am Maksim Karnaukh)
 
     Args:
         language (str): Language of the stop words. Default is 'english'.

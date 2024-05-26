@@ -22,6 +22,7 @@ def cv_correlation(data, clusters, metric='euclidean', correlation_method='corrc
     :param clusters: cluster labels
     :param metric: distance metric
     :param correlation_method: method to calculate the correlation ('spearman' or 'corrcoef')
+    :param precomputed: whether the data is already precomputed (e.g. distance matrix)
     :return: correlation between pairwise distances and incidence of the same cluster
     """
     if hasattr(data, "toarray") and not isinstance(data, np.ndarray):
@@ -65,10 +66,11 @@ def cv_similarity_matrix(data, clusters, metric='euclidean', precomputed=False) 
     :param data: numpy representation of the dataframe
     :param clusters: cluster labels
     :param metric: distance metric
+    :param precomputed: whether the data is already precomputed (e.g. distance matrix)
     :return:
     """
     if precomputed:
-        similarity_matrix = 1 - data
+        similarity_matrix = 1 - data # if the data is already precomputed, we assume it is a distance matrix
     else:
         similarity_matrix: np.ndarray = 1 - pairwise_distances(data, metric=metric)
 
@@ -111,6 +113,8 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     :param metric: the distance metric used for clustering
     :param random_state: random state for reproducibility
     :param n_permutations: the number of random permutations to generate
+    :param verbose: whether to print loop progress
+    :param precomputed: whether the data is already precomputed (e.g. distance matrix)
     :return: z-scores and atypicality of SSE, silhouette score and correlation
     """
     # scores of the actual clustering results
@@ -125,7 +129,7 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     sse_random: list[float] = []
     silhouette_random: list[float] = []
     correlation_random: list[float] = []
-    for _ in range(n_permutations):
+    for _ in range(n_permutations): # in this loop we generate random permutations and store the scores
         if verbose:
             print(f'Permutation {_ + 1}/{n_permutations}')
         permuted_data: np.ndarray = np.apply_along_axis(np.random.permutation, 0, data)
@@ -140,7 +144,7 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     silhouette_random: np.ndarray = np.array(silhouette_random)
     correlation_random: np.ndarray = np.array(correlation_random)
 
-    # Calculate mean and standard deviation of the random scores
+    # calculate mean and standard deviation of the random scores
     sse_mean: float = sse_random.mean()
     sse_std: float = sse_random.std()
     silhouette_mean: float = silhouette_random.mean()
@@ -148,7 +152,7 @@ def cv_statistics(actual_model: any, actual_clusters: np.ndarray, data: pd.DataF
     correlation_mean: float = correlation_random.mean()
     correlation_std: float = correlation_random.std()
 
-    # Determine if the actual clustering results are atypical
+    # determine if the actual clustering results are atypical
     sse_z_score: float = (actual_sse - sse_mean) / sse_std
     silhouette_z_score: float = (actual_silhouette - silhouette_mean) / silhouette_std
     correlation_z_score: float = (actual_correlation - correlation_mean) / correlation_std

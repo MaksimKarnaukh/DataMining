@@ -6,38 +6,32 @@
 ```
 Assignment1/
 │
-├── data/ (folder with the raw and cleaned dataset)
-│   ├── assignment1_income_levels.xlsx
-│   └── assignment1_income_levels_cleaned.csv
+├── data/ (folder with articles dataset)
+│   └── assignment3_articles.csv
 │
-├── output/ (folder with the .txt files containing the association rules)
-│   ├── a/ (everything related to Task 2.a)
-│   └── b/ (everything related to Task 2.b)
-│       └── split/ (related to the male/female dataset split)
-│
-├── plots/
-│   ├── assoc_rules/ (plots related to Task 2, mostly heatmaps)
-│   │   ├── a/ (plots related to Task 2.a) 
-│   │   └── b/ (plots related to Task 2.b)
-│   │       └── split/ (related to the male/female dataset split)
-│   │  
-│   └── data_preprocessing/ (plots related to Task 1)
+├── output/
+│   ├── cluster_assignments/ (original dataset file with cluster assignments)
+│   └── plots/ (plots for the paper)
 │      
 ├── src/
-│   ├── association_rules.ipynb (code for Task 2)
-│   ├── data_preprocessing.ipynb (code for Task 1)
+│   ├── cluster_plotting.py (cluster plotting functions)
+│   ├── cluster_validation.py (cluster validation functions)
+│   ├── cluster_validation_testing.ipynb (cluster validation testing on small example 2D dataset)
+│   ├── clustering_agglomerative.ipynb
+│   ├── clustering_bisectingkmeans.ipynb
+│   ├── clustering_dbscan.ipynb (this file shouldn't be looked at too seriously)
+│   ├── clustering_kmeans.ipynb
+│   ├── clustering_kmedoids.ipynb
+│   ├── data_preprocessor.py
 │   └── helper_functions.py
 │
-├── Data Mining Assignment - Association Rules.pdf
+├── Data Mining Assignment - Clustering.pdf
 ├── README.md
 └── requirements.txt
 ```
 
 The notebooks are commented and structured in a way that the code is easy to follow. 
 The requirements.txt file contains the libraries used in the notebooks.
-
-At the end of association_rules.ipynb, I experimented with the split male/female dataset, 
-but this wasn't as useful in the end, so it shouldn't be looked at.
 
 Please use a python 3.11 (or below) environment to run the code. 
 Python 3.12 doesn't work well with the sklearn_extra.cluster library (problem with distutils import in the library itself).
